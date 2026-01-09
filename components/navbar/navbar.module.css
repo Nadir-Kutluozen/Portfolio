@@ -1,0 +1,31 @@
+.navbar {
+    margin-top: 20px;
+    padding: 4px 4px;
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(192, 192, 192, 0.45);
+    transition: 0.3s ease;
+}
+
+.brand {
+    color: #f3e7ff !important;
+    letter-spacing: -0.5px;
+}
+
+.centerLinks .nav-link {
+    color: #f7eaff !important;
+    font-weight: 500;
+    transition: 0.25s ease;
+}
+
+.centerLinks .nav-link:hover {
+    color: #c78bff !important;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .navbar {
+        margin-top: 12px;
+        width: 95%;
+        padding: 5px;
+    }
+}
