@@ -75,8 +75,7 @@ export default function HeroSection() {
                         <div className="col-12 col-md-auto d-flex justify-content-center order-1 order-md-2 mb-3 mb-md-0 px-0">
                             <motion.div
                                 variants={itemVariants}
-                                className="rounded-4 overflow-hidden shadow-lg border border-2 border-white border-opacity-25"
-                                style={{ width: '340px', height: '340px' }}
+                                className={`rounded-4 overflow-hidden shadow-lg border border-2 border-white border-opacity-25 ${styles.imageContainer}`}
                             >
                                 <img
                                     src="/nadirk.jpg"
@@ -97,25 +96,25 @@ export default function HeroSection() {
                             </motion.p>
 
                             <motion.div
-                                className="d-flex gap-3 mt-3 justify-content-center justify-content-md-start flex-wrap"
+                                className="d-flex gap-3 mt-3 justify-content-center justify-content-md-start align-items-center flex-wrap flex-md-nowrap"
                                 variants={itemVariants}
                             >
                                 <motion.a
                                     href="/projects"
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="btn btn-outline-dark rounded-4 px-5 py-3 border-opacity-75 d-flex align-items-center fs-5 shadow-sm"
+                                    className={`btn btn-outline-dark rounded-4 border-opacity-75 d-flex align-items-center shadow-sm ${styles.ctaButton}`}
                                     style={{ backdropFilter: 'blur(5px)' }}
                                 >
-                                    Projects <FolderSearch size={28} className="ms-2" />
+                                    Projects <FolderSearch size={22} className="ms-2" />
                                 </motion.a>
                                 <motion.a
                                     href="mailto:nadirkutluozen.nk@gmail.com"
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="btn btn-dark rounded-4 px-5 py-3 fw-bold d-flex align-items-center text-white fs-5 shadow-sm"
+                                    className={`btn btn-dark rounded-4 fw-bold d-flex align-items-center text-white shadow-sm ${styles.ctaButton}`}
                                 >
-                                    Contact <ConnectMe size={24} className="ms-2" />
+                                    Contact <ConnectMe size={22} className="ms-2" />
                                 </motion.a>
                             </motion.div>
                         </div>
