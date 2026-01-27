@@ -33,13 +33,13 @@ export default function Navbar() {
     ]
 
     // Prevent body scroll when menu is open
-    // useEffect(() => {
-    //     if (isMobileMenuOpen) {
-    //         document.body.style.overflow = 'hidden'
-    //     } else {
-    //         document.body.style.overflow = 'unset'
-    //     }
-    // }, [isMobileMenuOpen])
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'unset'
+        }
+    }, [isMobileMenuOpen])
 
     return (
         <>
