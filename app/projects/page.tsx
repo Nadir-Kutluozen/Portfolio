@@ -4,11 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/projects";
 import { ArrowUpRight, Github, Menu, X, Calendar, User, Code } from "lucide-react";
 import ProjectSidebar from "@/components/ui/ProjectSidebar";
+import MobileProjectSlider from "@/components/ui/MobileProjectSlider";
 import Image from "next/image";
 
 export default function ProjectsPage() {
     const [selectedId, setSelectedId] = useState(projects[0].id);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const activeProject = projects.find((p) => p.id === selectedId) || projects[0];
 
@@ -23,61 +23,8 @@ export default function ProjectsPage() {
                 transition: 'background-color 0.3s ease, color 0.3s ease'
             }}
         >
-            {/* Mobile Menu Toggle (Sticky) */}
-            <div className="d-lg-none position-fixed top-0 start-0 w-100 px-4 py-3 z-3 d-flex justify-content-end pointer-events-none" style={{ marginTop: '80px' }}>
-                <button
-                    onClick={() => setIsMobileMenuOpen(true)}
-                    className="btn btn-dark rounded-circle p-3 shadow-lg pointer-events-auto d-flex align-items-center justify-content-center"
-                    style={{ width: '50px', height: '50px' }}
-                >
-                    <Menu size={24} />
-                </button>
-            </div>
-
-            {/* Mobile Navigation Drawer */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="position-fixed inset-0 w-100 h-100 z-4 bg-black bg-opacity-50"
-                            style={{ top: 0, left: 0 }}
-                        />
-                        <motion.div
-                            initial={{ y: "-100%" }}
-                            animate={{ y: 0 }}
-                            exit={{ y: "-100%" }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="position-fixed top-0 start-0 w-100 z-5 bg-body border-bottom border-secondary border-opacity-25"
-                            style={{ maxHeight: '80vh', overflowY: 'auto' }}
-                        >
-                            <div className="p-4 d-flex flex-column gap-2">
-                                <div className="d-flex justify-content-between align-items-center mb-4">
-                                    <h5 className="text-uppercase tracking-widest fw-bold mb-0">Select Project</h5>
-                                    <button onClick={() => setIsMobileMenuOpen(false)} className="btn btn-link link-body-emphasis p-0">
-                                        <X size={24} />
-                                    </button>
-                                </div>
-                                {projects.map((project) => (
-                                    <button
-                                        key={project.id}
-                                        onClick={() => {
-                                            setSelectedId(project.id);
-                                            setIsMobileMenuOpen(false);
-                                        }}
-                                        className={`btn text-start py-3 px-0 border-bottom border-secondary border-opacity-10 ${selectedId === project.id ? 'text-primary fw-bold' : ''}`}
-                                    >
-                                        <span className="h4 mb-0 text-uppercase" style={{ fontFamily: 'var(--font-couplin)' }}>{project.title}</span>
-                                    </button>
-                                ))}
-                            </div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
+            {/* Mobile Project Slider (Sticky Bottom) */}
+            <MobileProjectSlider selectedId={selectedId} setSelectedId={setSelectedId} />
 
             {/* Main Content Area */}
             {/* Use padding top to accommodate fixed navbar without pushing layout bounds */}
