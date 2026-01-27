@@ -1,4 +1,4 @@
-import { Github, Globe, Code, Cpu, Layout, Database, Server, Smartphone, Layers, Box, Terminal, Zap } from 'lucide-react';
+import { Github, Globe, Code, Cpu, Layout, Database, Server, Smartphone, Layers, Box, Terminal, Zap, LucideIcon } from 'lucide-react';
 
 export interface Project {
     id: string;
@@ -10,7 +10,7 @@ export interface Project {
     repoUrl?: string; // GitHub URL
     image: string; // Thumbnail path
     video?: string; // Video preview path
-    technologies: { name: string; icon: any }[]; // List of tech with icons
+    technologies: { name: string; icon: LucideIcon }[]; // List of tech with icons
     tags: string[]; // Categories like "Frontend", "Full Stack"
 }
 
