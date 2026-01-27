@@ -1,0 +1,78 @@
+/* About Section */
+.aboutSection {
+    position: relative;
+    padding: 8rem 0;
+    min-height: 100vh;
+    color: var(--foreground);
+    z-index: 2;
+    /* Ensure it sits above background if needed */
+}
+
+/* Sticky Title Column */
+.stickyColumn {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 15rem;
+    /* Space from top of viewport */
+    height: fit-content;
+    text-align: left;
+}
+
+/* Typography */
+.heading {
+    font-family: var(--font-couplin), sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--accent);
+    /* Or foreground, depending on preference */
+    margin-bottom: 2rem;
+}
+
+.titleDecoration {
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: var(--foreground);
+    margin-top: 1rem;
+    opacity: 0.3;
+}
+
+/* Content Column */
+.bioText {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.highlight {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .stickyColumn {
+        position: relative;
+        top: 0;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .heading {
+        font-size: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .titleDecoration {
+        margin-top: 0.5rem;
+    }
+
+    .aboutSection {
+        padding: 4rem 0;
+    }
+}

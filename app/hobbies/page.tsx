@@ -1,7 +1,9 @@
+
+
 export default function Hobbies() {
     return (
-        <div className="container mt-5">
-            <h1>Hobbies</h1>
+        <div className="d-flex vh-100 w-100 justify-content-center align-items-center">
+
         </div>
     );
 }

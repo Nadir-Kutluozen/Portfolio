@@ -1,51 +1,110 @@
+/* Hero Section */
+.heroSection {
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Typography */
 .name {
     font-family: var(--font-couplin), sans-serif;
-    font-size: clamp(3rem, 7vw, 11rem);
-    /* Large impact */
-    line-height: 0.8;
-    letter-spacing: 4px;
+    font-size: clamp(3rem, 7vw, 6rem);
+    /* Changed from 2rem/4rem to 3rem/6rem for bigger impact */
+    line-height: 1;
+    letter-spacing: 0.02em;
     color: var(--foreground);
     text-transform: uppercase;
+    text-align: center;
+    text-shadow: 0 0 40px rgba(198, 74, 255, 0.3);
+    margin-top: 0;
+    white-space: nowrap;
 }
 
 .subtitle {
-    font-weight: 400;
-    letter-spacing: 4px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
     opacity: 0.9;
+    font-size: clamp(1rem, 2vw, 1.8rem);
+    /* Increased size nicely */
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    line-height: 1.2;
 }
 
-/* Ensure no mask and sharp edges */
-.profileImage {
-    box-shadow: none;
-    border: none;
-    outline: none;
+.bio {
+    max-width: 600px;
+    margin: 1rem auto 0;
+    opacity: 0.8;
+    font-size: 1.2rem;
+    /* Larger text for readability */
+    line-height: 1.4;
 }
 
-@media (max-width: 992px) {
-    .name {
-        font-size: clamp(6rem, 12vw, 12rem);
-    }
-}
-
-.iconCutout {
+/* Navigation / Corners */
+.socialContainer {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    background-color: var(--background);
+    bottom: 2rem;
+    left: 3rem;
     z-index: 10;
-    border-top-right-radius: 32px;
-    /* Large curve for cutout effect */
-    padding: 1.5rem 2rem 1rem 1rem;
-    /* Extra padding top/right for the curve spacing */
+}
+
+.ctaContainer {
+    position: absolute;
+    bottom: 2rem;
+    right: 3rem;
+    z-index: 10;
+    display: flex;
+    gap: 1rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .name {
+        line-height: 1;
+        margin-bottom: 1rem;
+        font-size: clamp(2rem, 10vw, 3.5rem);
+        /* Smaller on mobile */
+        white-space: normal;
+        /* Allow wrapping on very small screens */
+    }
+
+    .socialContainer {
+        position: static;
+        margin-top: 2rem;
+        justify-content: center;
+        display: flex;
+        width: 100%;
+    }
+
+    .ctaContainer {
+        position: static;
+        margin-top: 1.5rem;
+        justify-content: center;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .heroSection {
+        /* Ensure content doesn't get cut off on small screens if it overflows */
+        height: auto;
+        min-height: 100vh;
+        padding-top: 5rem;
+        /* Space for navbar */
+        padding-bottom: 2rem;
+    }
 }
 
 .iconLink {
     color: var(--foreground);
-    opacity: 0.75;
+    opacity: 0.6;
     transition: all 0.3s ease;
 }
 
 .iconLink:hover {
     opacity: 1;
     color: var(--accent);
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px var(--accent);
 }

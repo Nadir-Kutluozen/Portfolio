@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { ArrowUpRight, Code, Cpu, Globe, Zap, Coffee, Layers } from "lucide-react";
 import { useTheme } from "@/context/ThemeProvider";
 
@@ -9,7 +9,7 @@ export default function AboutPage() {
     const { theme } = useTheme();
 
     // Staggered animation variants for grid items
-    const containerVariants = {
+    const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
@@ -19,7 +19,7 @@ export default function AboutPage() {
         }
     };
 
-    const itemVariants = {
+    const itemVariants: Variants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
     };

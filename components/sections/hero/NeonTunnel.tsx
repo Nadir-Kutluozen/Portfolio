@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useMemo, useEffect } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
+import { EffectComposer, Bloom, Noise } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { useTheme } from "@/context/ThemeProvider";
 
@@ -92,7 +92,7 @@ function TunnelContent({ lineColor, opacity }: TunnelContentProps) {
     const material = useMemo(() => {
         return new THREE.ShaderMaterial({
             uniforms: {
-                color: { value: new THREE.Color("#00ffcc") },
+                color: { value: new THREE.Color("#c64aff") },
                 opacity: { value: 0.3 }
             },
             vertexShader: `
@@ -171,34 +171,97 @@ function TunnelContent({ lineColor, opacity }: TunnelContentProps) {
     );
 }
 
+
+// Background Layer with Parallax
+// Background Layer with Parallax
+function BackgroundLayer() {
+    const meshRef = useRef<THREE.Mesh>(null);
+    const texture = useMemo(() => new THREE.TextureLoader().load("/space-image.jpg"), []);
+    const scrollRef = useRef(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            scrollRef.current = window.scrollY;
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    useFrame((state) => {
+        if (!meshRef.current) return;
+
+        // Mouse Parallax (existing)
+        const mouseX = (state.pointer.x * window.innerWidth) / window.innerWidth;
+        const mouseY = -(state.pointer.y * window.innerHeight) / window.innerHeight;
+
+        // target rotations based on mouse
+        const targetRotX = mouseY * 0.02;
+        const targetRotY = -mouseX * 0.02;
+
+        // Apply mouse rotation
+        meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, targetRotX, 0.02);
+        meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotY, 0.02);
+
+        // Scroll Parallax
+        // We move the background slightly up/down based on scroll
+        const targetY = scrollRef.current * 0.01;
+        meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, targetY, 0.05);
+    });
+
+    return (
+        <mesh ref={meshRef} position={[0, 0, -50]} scale={[120, 120, 1]}>
+            <planeGeometry />
+            <meshBasicMaterial map={texture} transparent opacity={0.3} />
+        </mesh>
+    );
+}
+
+
 export function NeonTunnel() {
     const { theme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return <div style={{ position: 'fixed', top: 0, left: 0, width: "100vw", height: "100vh", zIndex: -1, background: "#1A1A1B" }} />;
+
     const isDark = theme === "dark";
 
     const config = isDark ? {
-        bg: "#1A1A1B",
+        // bg: "#1A1A1B", // REMOVED: We want transparent-ish background to show space
+        // Use a very dark overlay for the seamless blend if needed, or just let space show
+        // But for "tunnel" feel, maybe we keep a base color but rely on the image
+        bg: "#050505",
         line: "#c64aff",
         opacity: 0.1,
         vignette: 'radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.9) 100%)',
         bloomIntensity: 0.5
     } : {
-        bg: "#F5F5F7", // Apple-like light grey from globals
-        line: "#133500", // Dark grey for contrast
+        bg: "#F5F5F7",
+        line: "#133500",
         opacity: 0.2,
         vignette: 'radial-gradient(circle, rgba(255,255,255,0) 40%, rgba(0, 0, 0, 0.22) 100%)',
-        bloomIntensity: 0.0 // Disable bloom for clean look
+        bloomIntensity: 0.0
     };
 
     return (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: "100vw", height: "100vh", zIndex: -1, background: config.bg, pointerEvents: "none", transition: "background 0.5s ease" }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, width: "100vw", height: "100vh", zIndex: -1, background: isDark ? '#111' : config.bg, pointerEvents: "none", transition: "background 0.5s ease" }}>
             <Canvas camera={{ position: [0, 0, 5], fov: 60 }} gl={{ antialias: false, alpha: false }}>
-                <color attach="background" args={[config.bg]} />
+                {/* Only attach solid color in light mode, or if we want to mix it. 
+                    For space mode (dark), we rely on the image. 
+                */}
+                {!isDark && <color attach="background" args={[config.bg]} />}
+                {isDark && <color attach="background" args={["#151515"]} />}
+
+                {isDark && <BackgroundLayer />}
 
                 <TunnelContent lineColor={config.line} opacity={config.opacity} />
 
                 <EffectComposer enabled={isDark}>
-                    {/* Only enable bloom in dark mode to save perf and avoid light mode artifacts */}
                     <Bloom luminanceThreshold={0.0} luminanceSmoothing={0.9} height={300} intensity={config.bloomIntensity} />
+                    <Noise opacity={0.08} />
                 </EffectComposer>
             </Canvas>
 

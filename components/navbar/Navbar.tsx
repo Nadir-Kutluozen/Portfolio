@@ -39,25 +39,15 @@ export default function Navbar() {
         >
             <motion.div
                 layout
-                className={`d-flex align-items-center shadow-sm ${isScrolled ? 'justify-content-center' : 'justify-content-between'}`}
-                initial={{ borderRadius: '1rem', width: '50%' }}
+                className={`d-flex align-items-center shadow-sm justify-content-center`}
+                initial={{ borderRadius: '1rem', width: 'fit-content', opacity: 0 }}
                 animate={{
-                    // Logic: Fit content if scrolled.
-                    // If Projects Page: 'fit-content' (looks best centered over content area)
-                    // If Home: 50%
-                    width: isScrolled || isProjectsPage ? 'fit-content' : 'calc(50% - 0.5rem)',
-
-                    // Positioning Logic:
-                    // Projects Page OR Scrolled: margin-left auto (pushes to right/center)
-                    // Home (Unscrolled): margin-left 0 (starts left)
-                    marginLeft: isProjectsPage || isScrolled ? 'auto' : '0',
-
-                    // Projects Page: margin-right 0 (sticks to right)
-                    // Home/Scrolled: margin-right auto (centers it)
-                    marginRight: isProjectsPage ? '0' : 'auto',
-
-                    padding: isScrolled ? '0.2rem 1rem' : '0.5rem 1rem',
-                    gap: isScrolled ? '1rem' : '0',
+                    width: 'fit-content',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    opacity: 1,
+                    padding: isScrolled ? '0.2rem 1rem' : '0.5rem 3rem',
+                    gap: '1rem',
                 }}
                 transition={{
                     type: "spring",
