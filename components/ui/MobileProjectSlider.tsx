@@ -36,7 +36,7 @@ export default function MobileProjectSlider({ selectedId, setSelectedId }: Mobil
             }}
         >
             <div
-                className="d-flex overflow-x-auto no-scrollbar py-3 px-2 gap-2"
+                className="d-flex overflow-x-auto no-scrollbar py-2 px-2 gap-2"
                 ref={scrollContainerRef}
             >
                 {projects.map((project) => (
@@ -44,16 +44,16 @@ export default function MobileProjectSlider({ selectedId, setSelectedId }: Mobil
                         key={project.id}
                         data-id={project.id}
                         onClick={() => setSelectedId(project.id)}
-                        className="btn border-0 rounded-4 px-4 text-nowrap d-flex align-items-center"
+                        className="btn btn-sm border-0 rounded-4 px-3 text-nowrap d-flex align-items-center"
                         style={{
                             backgroundColor: selectedId === project.id ? 'var(--accent)' : 'rgba(255,255,255,0.05)',
                             color: selectedId === project.id ? '#000' : 'var(--foreground)',
                             opacity: selectedId === project.id ? 1 : 0.7,
                             transition: 'all 0.3s ease',
-                            height: '46px', // Comfortable touch target
+                            height: '42px', // Comfortable touch target
                         }}
                     >
-                        <span className="fw-bold text-uppercase small tracking-wide" style={{ fontSize: '0.8rem' }}>
+                        <span className="fw-semibold text-uppercase small tracking-wider" style={{ fontSize: '0.8rem' }}>
                             {project.title}
                         </span>
                     </button>
