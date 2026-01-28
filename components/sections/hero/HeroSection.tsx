@@ -2,34 +2,40 @@
 
 import styles from "./HeroSection.module.css";
 import { Github, Linkedin, Twitter, Mail, Instagram } from "lucide-react";
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, AnimatePresence } from "framer-motion";
 import { ConnectMe } from "@/components/animation/microanimation/ConnectMe";
 import { FolderSearch } from "@/components/animation/microanimation/FolderSearch";
+import { useTheme } from "@/context/ThemeProvider";
 
 const containerVariants: Variants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, filter: "blur(10px)" },
     visible: {
         opacity: 1,
+        filter: "blur(0px)",
         transition: {
             staggerChildren: 0.15,
             delayChildren: 0.3,
+            duration: 0.8
         }
     }
 };
 
 const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 30, filter: "blur(10px)" }, // Add blur to items too for smoother effect
     visible: {
         opacity: 1,
         y: 0,
+        filter: "blur(0px)",
         transition: {
             duration: 1.2,
-            ease: [0.25, 1, 0.5, 1] // Smooth "premium" bezier curve
+            ease: [0.25, 1, 0.5, 1]
         }
     }
 };
 
 export default function HeroSection() {
+    const { theme } = useTheme();
+
     return (
         <section className={`${styles.heroSection} d-flex align-items-center justify-content-center`}>
             <div className="container position-relative z-1 h-100 d-flex flex-column align-items-center justify-content-center">
@@ -75,13 +81,21 @@ export default function HeroSection() {
                         <div className="col-12 col-md-auto d-flex justify-content-center order-1 order-md-2 mb-3 mb-md-0 px-0">
                             <motion.div
                                 variants={itemVariants}
-                                className={`rounded-4 overflow-hidden shadow-lg border border-2 border-white border-opacity-25 ${styles.imageContainer}`}
+                                className={`rounded-4 overflow-hidden shadow-lg border border-2 border-white border-opacity-25 bg-black ${styles.imageContainer}`}
+                                style={{ position: 'relative' }}
                             >
-                                <img
-                                    src="/nadirk.jpg"
-                                    alt="Nadir Kutluozen"
-                                    className="w-100 h-100 object-fit-cover"
-                                />
+                                <AnimatePresence>
+                                    <motion.img
+                                        key={theme}
+                                        src={theme === "dark" ? "/heroPhoto.JPG" : "/nadirk.jpg"}
+                                        alt="Nadir Kutluozen"
+                                        className="w-100 h-100 object-fit-cover position-absolute top-0 start-0"
+                                        initial={{ opacity: 0, filter: "blur(15px)", scale: 1.1 }}
+                                        animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+                                        exit={{ opacity: 0, filter: "blur(15px)", scale: 1.1 }}
+                                        transition={{ duration: 0.8, ease: "easeInOut" }}
+                                    />
+                                </AnimatePresence>
                             </motion.div>
                         </div>
 

@@ -1,14 +1,25 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/projects";
 import { ArrowUpRight, Github, Menu, X, Calendar, User, Code } from "lucide-react";
 import ProjectSidebar from "@/components/ui/ProjectSidebar";
 import MobileProjectSlider from "@/components/ui/MobileProjectSlider";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 export default function ProjectsPage() {
-    const [selectedId, setSelectedId] = useState(projects[0].id);
+    const searchParams = useSearchParams();
+    const initialId = searchParams.get("id");
+    const [selectedId, setSelectedId] = useState(initialId || projects[0].id);
+
+    // Update selectedId if URL changes (optional, but good for back/forward)
+    useEffect(() => {
+        const id = searchParams.get("id");
+        if (id && projects.find(p => p.id === id)) {
+            setSelectedId(id);
+        }
+    }, [searchParams]);
 
     const activeProject = projects.find((p) => p.id === selectedId) || projects[0];
 

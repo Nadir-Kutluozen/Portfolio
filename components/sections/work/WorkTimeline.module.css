@@ -1,0 +1,137 @@
+.timelineSection {
+    padding: 6rem 0;
+    overflow: hidden;
+}
+
+.timelineContainer {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+    /* Space for last footsteps */
+}
+
+/* The vertical line container - now just for alignment */
+.timelineLineContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.timelineItem {
+    position: relative;
+    margin-bottom: 8rem;
+    /* More space for footsteps */
+    width: 100%;
+    z-index: 2;
+}
+
+.timelineContent {
+    position: relative;
+    width: 45%;
+    padding: 1.5rem;
+    background-color: var(--nav-bg);
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--foreground);
+    border-color: color-mix(in srgb, var(--foreground), transparent 90%);
+    color: var(--foreground);
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.timelineContent:hover {
+    transform: translateY(-5px);
+}
+
+/* Project Dot (Major Stop) */
+.timelineDot {
+    position: absolute;
+    top: 1.5rem;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: var(--foreground);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    border: 4px solid var(--background);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--foreground), transparent 90%);
+}
+
+/* Footstep Marker */
+.footstep {
+    position: absolute;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: var(--foreground);
+    border-radius: 2px;
+    /* Slight rounded square */
+    transform: translateX(-50%);
+    opacity: 0.3;
+    z-index: 1;
+}
+
+/* Alternating layout (Desktop) */
+.timelineItem:nth-child(even) .timelineContent {
+    margin-left: auto;
+}
+
+.timelineItem:nth-child(odd) .timelineContent {
+    margin-right: auto;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .timelineLineContainer {
+        left: 20px;
+    }
+
+    .timelineDot {
+        left: 20px;
+    }
+
+    .footstep {
+        left: 20px;
+    }
+
+    .timelineContent {
+        width: calc(100% - 60px);
+        margin-left: 60px !important;
+        margin-right: 0 !important;
+    }
+}
+
+.dateBadge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--foreground);
+    background-color: color-mix(in srgb, var(--foreground), transparent 95%);
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+    opacity: 0.7;
+}
+
+.ctaLink {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.ctaLink:hover {
+    opacity: 1;
+}
