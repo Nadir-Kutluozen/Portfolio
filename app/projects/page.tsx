@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/projects";
 import { ArrowUpRight, Github, Menu, X, Calendar, User, Code } from "lucide-react";
@@ -8,7 +9,7 @@ import MobileProjectSlider from "@/components/ui/MobileProjectSlider";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 
-export default function ProjectsPage() {
+function ProjectsContent() {
     const searchParams = useSearchParams();
     const initialId = searchParams.get("id");
     const [selectedId, setSelectedId] = useState(initialId || projects[0].id);
@@ -175,5 +176,13 @@ export default function ProjectsPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function ProjectsPage() {
+    return (
+        <Suspense fallback={<div></div>}>
+            <ProjectsContent />
+        </Suspense>
     );
 }
