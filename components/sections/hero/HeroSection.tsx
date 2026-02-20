@@ -5,15 +5,16 @@ import { Github, Linkedin, Twitter, Mail, Instagram } from "lucide-react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import { ConnectMe } from "@/components/animation/microanimation/ConnectMe";
 import { FolderSearch } from "@/components/animation/microanimation/FolderSearch";
+import TextType from "@/components/animation/microanimation/TextType";
+import DynamicButton from "@/components/ui/DynamicButton";
 import { useTheme } from "@/context/ThemeProvider";
 
 const containerVariants: Variants = {
-    hidden: { opacity: 0, filter: "blur(10px)" },
+    hidden: { opacity: 0 },
     visible: {
         opacity: 1,
-        filter: "blur(0px)",
         transition: {
-            staggerChildren: 0.15,
+            staggerChildren: 0.1,
             delayChildren: 0.3,
             duration: 0.8
         }
@@ -21,13 +22,12 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30, filter: "blur(10px)" }, // Add blur to items too for smoother effect
+    hidden: { opacity: 0, y: 10 }, // Add blur to items too for smoother effect
     visible: {
         opacity: 1,
         y: 0,
-        filter: "blur(0px)",
         transition: {
-            duration: 1.2,
+            duration: 1,
             ease: [0.25, 1, 0.5, 1]
         }
     }
@@ -47,12 +47,19 @@ export default function HeroSection() {
                     animate="visible"
                     className="d-flex flex-column align-items-center justify-content-center w-100"
                 >
-                    <motion.h1 className={styles.name} variants={itemVariants}>
-                        NADIR KUTLUOZEN
-                    </motion.h1>
+                    <motion.div variants={itemVariants}>
+                        <TextType
+                            as="h1"
+                            text="NADIR KUTLUOZEN"
+                            typingSpeed={90}
+                            showCursor={true}
+                            loop={false}
+                            className={`${styles.name} m-0 p-0`}
+                            cursorClassName="text-accent"
+                        />
+                    </motion.div>
 
-                    {/* Newspaper Grid Layout */}
-                    <div className="row w-100 justify-content-center align-items-center mt-3 gap-4 gap-md-5">
+                    <div className="row w-100 justify-content-center align-items-center mt-4 mt-md-5">
 
                         {/* Column 1: Social Icons */}
                         <div className="col-12 col-md-auto d-flex flex-row flex-md-column justify-content-center align-items-center align-items-md-end gap-3 order-3 order-md-1 mt-4 mt-md-0">
@@ -68,7 +75,8 @@ export default function HeroSection() {
                                     target={social.href.startsWith("mailto") ? "_self" : "_blank"}
                                     rel="noopener noreferrer"
                                     className={styles.iconLink}
-                                    whileHover={{ scale: 1.2, x: 5 }}
+                                    whileHover={{ scale: 1.1 }}
+                                    transition={{ duration: 0.2, ease: "easeOut" }}
                                     whileTap={{ scale: 0.9 }}
                                     variants={itemVariants}
                                 >
@@ -77,8 +85,8 @@ export default function HeroSection() {
                             ))}
                         </div>
 
-                        {/* Column 2: Profile Photo */}
-                        <div className="col-12 col-md-auto d-flex justify-content-center order-1 order-md-2 mb-3 mb-md-0 px-0">
+                        {/* Column 2: Profile Photo (Left aligned now) */}
+                        <div className="col-12 col-md-5 d-flex justify-content-center justify-content-md-end order-1 order-md-2 mb-4 mb-md-0 pe-md-4">
                             <motion.div
                                 variants={itemVariants}
                                 className={`rounded-4 overflow-hidden shadow-lg border border-2 border-white border-opacity-25 bg-black ${styles.imageContainer}`}
@@ -99,37 +107,38 @@ export default function HeroSection() {
                             </motion.div>
                         </div>
 
-                        {/* Column 3: Bio & Buttons */}
-                        <div className="col-12 col-md-5 text-center text-md-start order-2 order-md-3">
+                        {/* Column 3: Bio & Buttons (Right aligned text block) */}
+                        <div className="col-12 col-md-6 text-center text-md-start order-2 order-md-3 ps-md-4">
                             <motion.h2 className={`${styles.subtitle} text-md-start`} variants={itemVariants}>
                                 Full Stack Software<br />and Design Engineer
                             </motion.h2>
 
-                            <motion.p className={`${styles.bio} mx-auto mx-md-0 text-md-start ps-1`} style={{ maxWidth: '450px' }} variants={itemVariants}>
+                            <motion.p className={`${styles.bio} mx-auto mx-md-0 text-md-start mt-4`} style={{ maxWidth: '480px' }} variants={itemVariants}>
                                 I build digital products that look good and work even better. Merging technical depth with creative design.
                             </motion.p>
 
                             <motion.div
-                                className="d-flex gap-3 mt-3 justify-content-center justify-content-md-start align-items-center flex-wrap flex-md-nowrap"
+                                className="d-flex gap-3 mt-5 justify-content-center justify-content-md-start align-items-center flex-wrap flex-md-nowrap"
                                 variants={itemVariants}
                             >
-                                <motion.a
-                                    href="/projects"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className={`btn btn-outline-dark rounded-4 border-opacity-75 d-flex align-items-center shadow-sm ${styles.ctaButton}`}
-                                    style={{ backdropFilter: 'blur(5px)' }}
-                                >
-                                    Projects <FolderSearch size={22} className="ms-2" />
-                                </motion.a>
-                                <motion.a
-                                    href="mailto:nadirkutluozen.nk@gmail.com"
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className={`btn btn-dark rounded-4 fw-bold d-flex align-items-center text-white shadow-sm ${styles.ctaButton}`}
-                                >
-                                    Contact <ConnectMe size={22} className="ms-2" />
-                                </motion.a>
+                                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                    <DynamicButton
+                                        href="/projects"
+                                        className={`btn btn-outline-dark border-opacity-75 d-flex align-items-center shadow-sm ${styles.ctaButton}`}
+                                        style={{ backdropFilter: 'blur(5px)', textDecoration: 'none' }}
+                                    >
+                                        Projects <FolderSearch size={22} className="ms-2" />
+                                    </DynamicButton>
+                                </motion.div>
+                                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                    <DynamicButton
+                                        href="mailto:nadirkutluozen.nk@gmail.com"
+                                        className={`btn btn-dark fw-bold d-flex align-items-center text-white shadow-sm ${styles.ctaButton}`}
+                                        style={{ textDecoration: 'none' }}
+                                    >
+                                        Contact <ConnectMe size={22} className="ms-2" />
+                                    </DynamicButton>
+                                </motion.div>
                             </motion.div>
                         </div>
                     </div>

@@ -1,97 +1,154 @@
-
 "use client";
 
-import React, { useRef } from "react";
-import styles from "./WorkTimeline.module.css";
+import React, { useRef, useState, useEffect } from "react";
 import { projects } from "@/data/projects";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import FootstepPath from "./FootstepPath";
 
 export default function WorkTimeline() {
-    const sectionRef = useRef<HTMLElement>(null);
-    const [sectionHeight, setSectionHeight] = React.useState(0);
+    const carouselRef = useRef<HTMLDivElement>(null);
+    const [dragWidth, setDragWidth] = useState(0);
 
-    // Measure height for path calculation
-    React.useEffect(() => {
-        if (!sectionRef.current) return;
-
-        const observer = new ResizeObserver((entries) => {
-            for (let entry of entries) {
-                setSectionHeight(entry.contentRect.height);
+    useEffect(() => {
+        const updateWidth = () => {
+            if (carouselRef.current) {
+                setDragWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
             }
-        });
+        };
 
-        observer.observe(sectionRef.current);
-        return () => observer.disconnect();
+        // Slight delay to ensure images/layout are ready
+        setTimeout(updateWidth, 100);
+        window.addEventListener("resize", updateWidth);
+        return () => window.removeEventListener("resize", updateWidth);
     }, []);
 
-    // Sort projects by date descending (newest first) just in case
+    // Sort projects by date descending
     const sortedProjects = [...projects].sort((a, b) =>
         new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
     return (
-        <section ref={sectionRef} className={styles.timelineSection}>
-            <div className="container position-relative">
+        <section className="py-2 position-relative">
+            <div className="container py-3">
+                <div className="mb-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                    >
+                        <h2 className="display-6 fw-bold mb-1 tracking-tight" style={{ color: 'var(--foreground)' }}>Featured Work</h2>
+                        <p className="mb-0" style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>A selection of my recent projects and experiments.</p>
+                    </motion.div>
+                </div>
+
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-5"
+                    transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
                 >
-                    <h2 className="display-2 fw-bold mb-3">My Work</h2>
-                    <p className="lead opacity-75">A timeline of my recent projects and experiments.</p>
-                </motion.div>
-
-                <div className={styles.timelineContainer}>
-                    {/* Animated Path & Footsteps */}
-                    <FootstepPath height={sectionHeight} />
-
-                    {sortedProjects.map((project, index) => (
+                    <motion.div
+                        ref={carouselRef}
+                        className="overflow-hidden"
+                        style={{ cursor: "grab" }}
+                        whileTap={{ cursor: "grabbing" }}
+                    >
                         <motion.div
-                            key={project.id}
-                            className={styles.timelineItem}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-100px" }}
-                            transition={{ duration: 0.5 }}
+                            drag="x"
+                            dragConstraints={{ right: 0, left: -dragWidth }}
+                            dragElastic={0.15}
+                            dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
+                            className="d-flex gap-3"
+                            style={{ width: "max-content", paddingBottom: "1rem" }}
                         >
-                            {/* Dot */}
-                            {/* We just use a simple dot now, the path handles the connection visual */}
-                            <div className={styles.timelineDot} />
-
-                            {/* Content Card */}
-                            <div className={styles.timelineContent}>
-                                <span className={styles.dateBadge}>
-                                    {new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
-                                </span>
-
-                                <div className="d-flex align-items-center gap-3 mb-3">
-                                    <div className="position-relative overflow-hidden rounded-3 shadow-sm border border-secondary border-opacity-10" style={{ width: '50px', height: '50px', flexShrink: 0 }}>
-                                        <Image
-                                            src={project.image}
-                                            alt={project.title}
-                                            fill
-                                            className="object-fit-cover"
-                                            sizes="50px"
-                                        />
+                            {sortedProjects.map((project) => (
+                                <motion.div
+                                    key={project.id}
+                                    className="d-flex flex-column"
+                                    style={{
+                                        width: '320px',
+                                        backgroundColor: 'var(--background)',
+                                        border: '1px solid rgba(125, 125, 125, 0.2)',
+                                        borderRadius: '0px',
+                                    }}
+                                >
+                                    <div className="position-relative w-100" style={{ height: '180px', backgroundColor: 'var(--nav-bg)', borderBottom: '1px solid rgba(125, 125, 125, 0.2)' }}>
+                                        {project.image && (
+                                            <Image
+                                                src={project.image}
+                                                alt={project.title}
+                                                fill
+                                                className="object-fit-cover"
+                                                sizes="320px"
+                                                draggable={false}
+                                            />
+                                        )}
                                     </div>
-                                    <h3 className="h4 fw-bold m-0">{project.title}</h3>
-                                </div>
 
-                                <p className="opacity-75 mb-3">{project.description}</p>
+                                    <div className="p-3 d-flex flex-column h-100">
+                                        <div className="d-flex justify-content-between align-items-start mb-2">
+                                            <h3 className="h6 fw-bold m-0" style={{ color: 'var(--foreground)' }}>{project.title}</h3>
+                                            <span className="small fw-medium" style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
+                                                {new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+                                            </span>
+                                        </div>
 
-                                <Link href={`/projects?id=${project.id}`} className={styles.ctaLink}>
-                                    Learn More <ArrowUpRight size={16} className="ms-1" />
-                                </Link>
-                            </div>
+                                        <p className="flex-grow-1" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                                            {project.description}
+                                        </p>
+
+                                        <div className="d-flex flex-wrap gap-2 mb-3">
+                                            {project.tags.map(tag => (
+                                                <span key={tag} className="px-2 py-1" style={{
+                                                    fontSize: '0.7rem',
+                                                    backgroundColor: 'var(--nav-bg)',
+                                                    color: 'var(--foreground)',
+                                                    border: '1px solid rgba(125,125,125,0.2)',
+                                                    borderRadius: '0px'
+                                                }}>
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+
+                                        <div className="d-flex align-items-center gap-2 mt-auto pt-3" style={{ borderTop: '1px solid rgba(125,125,125,0.2)' }}>
+                                            <Link href={`/projects?id=${project.id}`} className="btn btn-sm d-flex align-items-center justify-content-center gap-2 flex-grow-1" style={{
+                                                backgroundColor: 'var(--foreground)',
+                                                color: 'var(--background)',
+                                                borderRadius: '0px',
+                                                fontWeight: 500,
+                                                border: '1px solid var(--foreground)'
+                                            }}
+                                                draggable={false}
+                                            >
+                                                Learn More <ArrowUpRight size={14} />
+                                            </Link>
+                                            {project.repoUrl && (
+                                                <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-sm d-flex align-items-center justify-content-center" style={{
+                                                    border: '1px solid rgba(125,125,125,0.2)',
+                                                    color: 'var(--foreground)',
+                                                    backgroundColor: 'transparent',
+                                                    borderRadius: '0px',
+                                                    width: '32px',
+                                                    height: '32px',
+                                                    padding: 0
+                                                }}
+                                                    aria-label="Github Repo"
+                                                    draggable={false}
+                                                >
+                                                    <Github size={14} />
+                                                </a>
+                                            )}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
                         </motion.div>
-                    ))}
-                </div>
+                    </motion.div>
+                </motion.div>
             </div>
         </section>
     );

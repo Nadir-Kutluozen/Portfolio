@@ -2,7 +2,7 @@
 
 import { useRef, useMemo, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { EffectComposer, Bloom, Noise } from "@react-three/postprocessing";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { useTheme } from "@/context/ThemeProvider";
 
@@ -261,7 +261,6 @@ export function NeonTunnel() {
 
                 <EffectComposer enabled={isDark}>
                     <Bloom luminanceThreshold={0.0} luminanceSmoothing={0.9} height={300} intensity={config.bloomIntensity} />
-                    <Noise opacity={0.08} />
                 </EffectComposer>
             </Canvas>
 

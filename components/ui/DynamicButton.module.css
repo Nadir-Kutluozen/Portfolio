@@ -1,0 +1,48 @@
+.dynamicButton {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dynamicButton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--foreground);
+    z-index: -1;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.dynamicButton.left::after {
+    transform-origin: left;
+}
+
+.dynamicButton.right::after {
+    transform-origin: right;
+}
+
+/* Hover state */
+.dynamicButton:not(.hovering)::after {
+    transform: scaleX(0);
+}
+
+.dynamicButton.hovering::after {
+    transform: scaleX(1);
+}
+
+.dynamicButton.hovering {
+    color: var(--background) !important;
+}
+
+/* ensure internal icons adapt to color change */
+.dynamicButton.hovering svg,
+.dynamicButton.hovering span {
+    color: var(--background) !important;
+    fill: var(--background);
+}
