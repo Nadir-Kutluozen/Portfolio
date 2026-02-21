@@ -24,6 +24,7 @@
     font-family: var(--font-couplin), sans-serif;
     font-size: clamp(2.5rem, 5vw, 4rem);
     line-height: 1;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--accent);
     /* Or foreground, depending on preference */

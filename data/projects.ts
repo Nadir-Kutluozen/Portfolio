@@ -18,12 +18,11 @@ export const projects: Project[] = [
     {
         id: "1",
         title: "Bandit Animation",
-        description: "A futuristic analytics dashboard featuring real-time data visualization and a glassmorphic UI.",
+        description: "A Visual Animation tool that lets you animate your static SVG and export as React Component",
         longDescription: "Built with Next.js and Framer Motion, this dashboard visualizes complex datasets in real-time. It features a custom-built charting library, dark mode by default, and a responsive bento-grid layout.",
-        date: "2024-12",
+        date: "2026-01",
         link: "https://www.banditanimation.com",
-        repoUrl: "https://github.com/nadir-kutluozen",
-        image: "/bandit-thumb.png",
+        image: "/banditthumb.png",
         video: "/bandit-demo.mp4",
         technologies: [
             { name: "Next.js", icon: Layout },
@@ -35,48 +34,72 @@ export const projects: Project[] = [
     },
     {
         id: "2",
-        title: "Aurora E-Commerce",
-        description: "A premium shopping experience with seamless page transitions and 3D product previews.",
-        date: "2024-10",
-        link: "https://example.com/aurora",
-        repoUrl: "https://github.com/nadir-kutluozen/aurora-shop",
-        image: "/projects/aurora-thumb.jpg",
+        title: "OpenHand",
+        description: "An intuitive platform designed for open-source project management and seamless developer collaboration.",
+        date: "2025-10",
+        link: "https://example.com/openhand",
+        image: "/openhand.png",
         technologies: [
             { name: "React", icon: Code },
-            { name: "Three.js", icon: Box },
-            { name: "TailwindCSS", icon: Layout },
-            { name: "Shopify API", icon: Database }
+            { name: "Node.js", icon: Server },
+            { name: "PostgreSQL", icon: Database }
         ],
-        tags: ["E-Commerce", "3D"]
+        tags: ["Open Source", "Platform"]
     },
     {
         id: "3",
-        title: "Zenith Task Manager",
-        description: "A minimalist productivity tool focused on flow state and gesture-based interactions.",
-        date: "2024-08",
-        link: "https://example.com/zenith",
-        repoUrl: "https://github.com/nadir-kutluozen/zenith-tasks",
-        image: "/projects/zenith-thumb.jpg",
+        title: "MedBrokerage",
+        description: "A comprehensive healthcare brokerage platform tailored for medical professionals and clinics.",
+        date: "2025-06",
+        link: "https://example.com/medbrokerage",
+        image: "/medbrokerage.png",
         technologies: [
-            { name: "Flutter", icon: Smartphone },
+            { name: "Next.js", icon: Layout },
+            { name: "TypeScript", icon: Code },
+            { name: "TailwindCSS", icon: Layers }
+        ],
+        tags: ["Healthcare", "B2B"]
+    },
+    {
+        id: "4",
+        title: "Northshore Aviary",
+        description: "An engaging and visually rich website built for managing bird conservation and aviary data.",
+        date: "2024-11",
+        link: "https://example.com/northshore",
+        image: "/northshoreAviary.png",
+        technologies: [
+            { name: "Vue.js", icon: Code },
             { name: "Firebase", icon: Database },
-            { name: "Dart", icon: Code }
+            { name: "Figma", icon: Box }
+        ],
+        tags: ["Conservation", "Web App"]
+    },
+    {
+        id: "5",
+        title: "Punchcard",
+        description: "A modern time-tracking and employee management application focusing on minimal workflows.",
+        date: "2024-05",
+        link: "https://example.com/punchcard",
+        image: "/punchcard.png",
+        technologies: [
+            { name: "React Native", icon: Smartphone },
+            { name: "GraphQL", icon: Zap },
+            { name: "Node.js", icon: Server }
         ],
         tags: ["Mobile App", "Productivity"]
     },
     {
-        id: "4",
-        title: "Echo Social Graph",
-        description: "Visualizing social connections through an interactive, force-directed graph engine.",
-        date: "2024-05",
-        link: "https://example.com/echo",
-        image: "/projects/echo-thumb.jpg",
+        id: "6",
+        title: "Course Compare",
+        description: "An analytics-driven directory for comparing online courses, complete with real-time reviews.",
+        date: "2023-12",
+        link: "https://example.com/coursecompare",
+        image: "/onlinecoursecompare.png",
         technologies: [
-            { name: "Vue.js", icon: Code },
-            { name: "WebGL", icon: Layers },
-            { name: "Node.js", icon: Server },
-            { name: "GraphQL", icon: Zap }
+            { name: "Next.js", icon: Layout },
+            { name: "Prisma", icon: Database },
+            { name: "TailwindCSS", icon: Layers }
         ],
-        tags: ["Social", "WebGL"]
+        tags: ["Education", "Directory"]
     }
 ];

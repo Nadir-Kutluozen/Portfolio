@@ -89,7 +89,7 @@ export default function HeroSection() {
                         <div className="col-12 col-md-5 d-flex justify-content-center justify-content-md-end order-1 order-md-2 mb-4 mb-md-0 pe-md-4">
                             <motion.div
                                 variants={itemVariants}
-                                className={`rounded-4 overflow-hidden shadow-lg border border-2 border-white border-opacity-25 bg-black ${styles.imageContainer}`}
+                                className={`rounded-3 overflow-hidden shadow-lg border border-2 border-white border-opacity-25  ${styles.imageContainer}`}
                                 style={{ position: 'relative' }}
                             >
                                 <AnimatePresence>

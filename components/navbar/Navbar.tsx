@@ -3,8 +3,9 @@ import Link from 'next/link'
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { Briefcase, Home, User, Heart, Mail, Menu, X } from 'lucide-react'
+import { Briefcase, User, Heart, Mail, Menu, X } from 'lucide-react'
 import ThemeToggle from '../ui/ThemeToggle'
+import { HomeIconAnimated } from '../animation/microanimation/HomeIconAnimated'
 import DynamicButton from '../ui/DynamicButton'
 export default function Navbar() {
     const { scrollY } = useScroll()
@@ -19,6 +20,17 @@ export default function Navbar() {
     useMotionValueEvent(scrollY, "change", (latest) => {
         setIsScrolled(latest > 10)
     })
+
+    // Listen to custom scroll events for pages that use internal scrolling divs instead of window scroll
+    useEffect(() => {
+        const handleProjectScroll = (e: Event) => {
+            const customEvent = e as CustomEvent<number>;
+            setIsScrolled(customEvent.detail > 10);
+        };
+
+        window.addEventListener('projectScroll', handleProjectScroll);
+        return () => window.removeEventListener('projectScroll', handleProjectScroll);
+    }, []);
 
     const navLinks = [
         { name: 'Projects', href: '/projects', icon: Briefcase },
@@ -61,9 +73,8 @@ export default function Navbar() {
                                     height: '32px',
                                     color: 'var(--foreground)'
                                 }}>
-                                    <Home size={16} />
+                                    <HomeIconAnimated size={32} stroke='var(--foreground)' />
                                 </div>
-                                <span className="fw-bold tracking-tight small ms-1 text-uppercase letter-spacing-1">Nadir</span>
                             </Link>
                         </div>
 
