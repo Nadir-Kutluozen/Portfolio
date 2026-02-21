@@ -6,6 +6,7 @@ import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
 import { ArrowUpRight, Github } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import PixelTransition from "@/components/animation/microanimation/PixelTransition";
 
 export default function WorkTimeline() {
     const carouselRef = useRef<HTMLDivElement>(null);
@@ -66,171 +67,161 @@ export default function WorkTimeline() {
 
     return (
         <section
-            className="position-relative py-5 d-flex flex-column justify-content-center"
-            style={{ minHeight: '100vh', overflowX: 'hidden' }}
+            className="position-relative d-flex flex-column"
+            style={{ height: '100vh', overflowX: 'hidden' }}
         >
-            <div className="container py-3">
-                <div className="mb-5">
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                    >
-                        <h2 className="display-6 fw-light mb-1 tracking-tight" style={{ letterSpacing: '0.15em', color: 'var(--foreground)' }}>Featured Work</h2>
-                        <p className="mb-0" style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>A selection of my recent projects and experiments.</p>
-                    </motion.div>
-                </div>
-
+            {/* Top 30% Header Area */}
+            <div className="container d-flex flex-column justify-content-end pb-4" style={{ height: '30vh' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                    <div
-                        className="position-relative"
-                        style={{
-                            marginLeft: 'calc(50% - 50vw)',
-                            marginRight: 'calc(50% - 50vw)'
-                        }}
-                    >
-                        {/* Left Shadow */}
-                        <div
-                            className="position-absolute top-0 bottom-0"
-                            style={{
-                                left: 0,
-                                width: '80px',
-                                background: 'linear-gradient(to right, var(--background) 0%, transparent 100%)',
-                                zIndex: 10,
-                                opacity: isScrolled ? 1 : 0,
-                                transition: 'opacity 0.3s ease',
-                                pointerEvents: 'none'
-                            }}
-                        />
-
-                        {/* Right Shadow */}
-                        <div
-                            className="position-absolute top-0 bottom-0"
-                            style={{
-                                right: 0,
-                                width: '100px',
-                                background: 'linear-gradient(to left, var(--background) 0%, transparent 100%)',
-                                zIndex: 10,
-                                pointerEvents: 'none'
-                            }}
-                        />
-
-                        <motion.div
-                            ref={carouselRef}
-                            style={{
-                                cursor: "grab",
-                                paddingLeft: 'calc(50vw - 50%)',
-                                paddingRight: 'calc(50vw - 50%)'
-                            }}
-                            whileTap={{ cursor: "grabbing" }}
-                        >
-                            <motion.div
-                                drag="x"
-                                style={{
-                                    x,
-                                    width: "max-content",
-                                    paddingBottom: "0rem",
-                                    paddingLeft: "1rem",
-                                    paddingRight: "1rem"
-                                }}
-                                dragConstraints={{ right: 0, left: -dragWidth }}
-                                dragElastic={0.15}
-                                dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
-                                className="d-flex gap-3"
-                            >
-                                {sortedProjects.map((project) => (
-                                    <motion.div
-                                        key={project.id}
-                                        className="d-flex flex-column"
-                                        style={{
-                                            width: '320px',
-                                            backgroundColor: 'var(--background)',
-                                            border: '1px solid rgba(125, 125, 125, 0.2)',
-                                            borderRadius: '0px',
-                                        }}
-                                    >
-                                        <div className="position-relative w-100" style={{ height: '180px', backgroundColor: 'var(--nav-bg)', borderBottom: '1px solid rgba(125, 125, 125, 0.2)' }}>
-                                            {project.image && (
-                                                <Image
-                                                    src={project.image}
-                                                    alt={project.title}
-                                                    fill
-                                                    className="object-fit-cover"
-                                                    sizes="320px"
-                                                    draggable={false}
-                                                />
-                                            )}
-                                        </div>
-
-                                        <div className="p-3 d-flex flex-column h-100">
-                                            <div className="d-flex justify-content-between align-items-start mb-2">
-                                                <h3 className="h6 fw-bold m-0" style={{ color: 'var(--foreground)' }}>{project.title}</h3>
-                                                <span className="small fw-medium" style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
-                                                    {new Date(project.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
-                                                </span>
-                                            </div>
-
-                                            <p className="flex-grow-1" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                                                {project.description}
-                                            </p>
-
-                                            <div className="d-flex flex-wrap gap-2 mb-3">
-                                                {project.tags.map(tag => (
-                                                    <span key={tag} className="px-2 py-1" style={{
-                                                        fontSize: '0.7rem',
-                                                        backgroundColor: 'var(--nav-bg)',
-                                                        color: 'var(--foreground)',
-                                                        border: '1px solid rgba(125,125,125,0.2)',
-                                                        borderRadius: '0px'
-                                                    }}>
-                                                        {tag}
-                                                    </span>
-                                                ))}
-                                            </div>
-
-                                            <div className="d-flex align-items-center gap-2 mt-auto pt-3" style={{ borderTop: '1px solid rgba(125,125,125,0.2)' }}>
-                                                <Link href={`/projects?id=${project.id}`} className="btn btn-sm d-flex align-items-center justify-content-center gap-2 flex-grow-1" style={{
-                                                    backgroundColor: 'var(--foreground)',
-                                                    color: 'var(--background)',
-                                                    borderRadius: '0px',
-                                                    fontWeight: 500,
-                                                    border: '1px solid var(--foreground)'
-                                                }}
-                                                    draggable={false}
-                                                >
-                                                    Learn More <ArrowUpRight size={14} />
-                                                </Link>
-                                                {project.repoUrl && (
-                                                    <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-sm d-flex align-items-center justify-content-center" style={{
-                                                        border: '1px solid rgba(125,125,125,0.2)',
-                                                        color: 'var(--foreground)',
-                                                        backgroundColor: 'transparent',
-                                                        borderRadius: '0px',
-                                                        width: '32px',
-                                                        height: '32px',
-                                                        padding: 0
-                                                    }}
-                                                        aria-label="Github Repo"
-                                                        draggable={false}
-                                                    >
-                                                        <Github size={14} />
-                                                    </a>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </motion.div>
-                        </motion.div>
-                    </div>
+                    <h2 className="fw-light mb-1 text-uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', letterSpacing: '0.15em', color: 'var(--foreground)' }}>
+                        Selected Works
+                    </h2>
+                    <p className="mb-0 fs-5 fw-light" style={{ color: 'var(--text-secondary)' }}>
+                        A selection of my recent projects and experiments.
+                    </p>
                 </motion.div>
             </div>
+
+            {/* Bottom 70% Carousel Area */}
+            <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+                style={{ height: '70vh' }}
+                className="w-100"
+            >
+                <div
+                    className="position-relative h-100 w-100"
+                >
+                    {/* Left Shadow */}
+                    <div
+                        className="position-absolute top-0 bottom-0"
+                        style={{
+                            left: 0,
+                            width: '40px',
+                            background: 'linear-gradient(to right, var(--background) 0%, transparent 100%)',
+                            zIndex: 10,
+                            opacity: isScrolled ? 0.4 : 0,
+                            transition: 'opacity 0.3s ease',
+                            pointerEvents: 'none'
+                        }}
+                    />
+
+                    {/* Right Shadow */}
+                    <div
+                        className="position-absolute top-0 bottom-0"
+                        style={{
+                            right: 0,
+                            width: '40px',
+                            background: 'linear-gradient(to left, var(--background) 0%, transparent 100%)',
+                            zIndex: 10,
+                            opacity: 0.4,
+                            pointerEvents: 'none'
+                        }}
+                    />
+
+                    <motion.div
+                        ref={carouselRef}
+                        className="h-100 w-100 overflow-hidden"
+                        style={{
+                            cursor: "grab",
+                        }}
+                        whileTap={{ cursor: "grabbing" }}
+                    >
+                        <motion.div
+                            drag="x"
+                            className="h-100 d-flex align-items-stretch"
+                            style={{
+                                x,
+                                width: "max-content",
+                            }}
+                            dragConstraints={{ right: 0, left: -dragWidth }}
+                            dragElastic={0.15}
+                            dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
+                        >
+                            {/* The projects array is mapped to create the massive flush cards */}
+                            {sortedProjects.map((project, index) => (
+                                <motion.div
+                                    key={project.id}
+                                    className="d-flex flex-column position-relative overflow-hidden group"
+                                    style={{
+                                        aspectRatio: '1 / 1.05', // Near square ratio
+                                        height: '100%',
+                                        backgroundColor: 'var(--nav-bg)',
+                                        borderRight: index === sortedProjects.length - 1 ? 'none' : '1px solid rgba(125, 125, 125, 0.2)',
+                                        borderTop: '1px solid rgba(125, 125, 125, 0.2)',
+                                        borderBottom: 'none',
+                                        borderRadius: '0px',
+                                        flexShrink: 0
+                                    }}
+                                >
+                                    {/* Massive Image Background Covering the Card with Pixel Transition */}
+                                    <PixelTransition
+                                        gridSize={10}
+                                        pixelColor="var(--foreground)"
+                                        animationStepDuration={0.3}
+                                        aspectRatio="0"
+                                        className="position-absolute w-100 h-100 top-0 start-0 z-0"
+                                        firstContent={
+                                            <div className="w-100 h-100 position-relative">
+                                                {(project.image) && (
+                                                    <Image
+                                                        src={project.homepageimage || project.image}
+                                                        alt={project.title}
+                                                        fill
+                                                        className="object-fit-cover "
+                                                        sizes="(max-width: 768px) 92vw, 850px"
+                                                        draggable={false}
+                                                        style={{ filter: 'grayscale(10%)' }}
+                                                    />
+                                                )}
+                                                {/* Overlay gradient so text is readable */}
+                                                <div className="position-absolute w-100 h-100 top-0 start-0" style={{
+                                                    background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 40%)',
+                                                    opacity: 1
+                                                }} />
+                                            </div>
+                                        }
+                                        secondContent={
+                                            <div className="w-100 h-100 d-flex align-items-center justify-content-center" style={{ backgroundColor: 'var(--foreground)' }}>
+                                                <h3 className="display-3 fw-bold text-uppercase m-0 text-center px-4" style={{ color: 'var(--background)' }}>
+                                                    {project.title}
+                                                </h3>
+                                            </div>
+                                        }
+                                    />
+
+                                    {/* Content Area overlaying the bottom of the card */}
+                                    <div className="mt-auto position-relative z-1 d-flex flex-column text-white h-100 justify-content-end p-0" style={{ pointerEvents: 'none' }}>
+
+
+                                        <div className="d-flex w-100" style={{ pointerEvents: 'auto' }}>
+                                            <Link href={`/projects?id=${project.id}`} className="btn text-uppercase tracking-wider fw-medium d-inline-flex align-items-center justify-content-center m-0" style={{
+                                                backgroundColor: 'var(--foreground)',
+                                                color: 'var(--background)',
+                                                borderRadius: '0px',
+                                                border: 'none',
+                                                fontSize: '1.1rem',
+                                                padding: '1.5rem 3rem',
+                                            }}
+                                                draggable={false}
+                                            >
+                                                Learn More <ArrowUpRight size={22} className="ms-2" />
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    </motion.div>
+                </div>
+            </motion.div>
         </section>
     );
 }

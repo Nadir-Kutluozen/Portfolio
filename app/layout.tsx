@@ -5,7 +5,7 @@ import BootstrapClient from "./BootstrapClient"; // Ensure this is imported
 import localFont from "next/font/local";
 import Navbar from "@/components/navbar/Navbar";
 import { NeonTunnel } from "@/components/sections/hero/NeonTunnel";
-
+import PageLoader from "@/components/ui/PageLoader";
 
 export const metadata = {
   title: "Nadir Kutluozen",
@@ -21,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="" suppressHydrationWarning>
         <ThemeProvider>
+          <PageLoader />
           <NeonTunnel />
           <Navbar />
           {children}

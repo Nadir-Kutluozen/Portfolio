@@ -44,16 +44,19 @@ export default function MobileProjectSlider({ selectedId, setSelectedId }: Mobil
                         key={project.id}
                         data-id={project.id}
                         onClick={() => setSelectedId(project.id)}
-                        className="btn btn-sm border-0 rounded-4 px-3 text-nowrap d-flex align-items-center"
+                        className="btn btn-sm px-3 text-nowrap d-flex align-items-center"
                         style={{
-                            backgroundColor: selectedId === project.id ? 'var(--accent)' : 'rgba(255,255,255,0.05)',
-                            color: selectedId === project.id ? '#000' : 'var(--foreground)',
+                            backgroundColor: selectedId === project.id ? 'var(--foreground)' : 'transparent',
+                            color: selectedId === project.id ? 'var(--background)' : 'var(--foreground)',
+                            border: '1px solid',
+                            borderColor: selectedId === project.id ? 'var(--foreground)' : 'rgba(125,125,125,0.2)',
+                            borderRadius: '0px',
                             opacity: selectedId === project.id ? 1 : 0.7,
                             transition: 'all 0.3s ease',
                             height: '42px', // Comfortable touch target
                         }}
                     >
-                        <span className="fw-semibold text-uppercase small tracking-wider" style={{ fontSize: '0.8rem' }}>
+                        <span className="fw-medium text-uppercase small tracking-wider" style={{ fontSize: '0.8rem', letterSpacing: '0.05em' }}>
                             {project.title}
                         </span>
                     </button>

@@ -236,13 +236,11 @@ export function NeonTunnel() {
         bg: "#050505",
         line: "#c64aff",
         opacity: 0.1,
-        vignette: 'radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.9) 100%)',
         bloomIntensity: 0.5
     } : {
         bg: "#F5F5F7",
         line: "#133500",
         opacity: 0.2,
-        vignette: 'radial-gradient(circle, rgba(255,255,255,0) 40%, rgba(0, 0, 0, 0.22) 100%)',
         bloomIntensity: 0.0
     };
 
@@ -263,17 +261,6 @@ export function NeonTunnel() {
                     <Bloom luminanceThreshold={0.0} luminanceSmoothing={0.9} height={300} intensity={config.bloomIntensity} />
                 </EffectComposer>
             </Canvas>
-
-            <div style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                background: config.vignette,
-                pointerEvents: 'none',
-                transition: "background 0.5s ease"
-            }} />
         </div>
     );
 }

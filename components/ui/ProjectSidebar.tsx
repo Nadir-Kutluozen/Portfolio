@@ -22,20 +22,26 @@ export default function ProjectSidebar({ selectedId, setSelectedId }: ProjectSid
                             onClick={() => setSelectedId(project.id)}
                             className={`btn text-start border-0 p-0 transition-all d-flex align-items-center position-relative group bg-transparent`}
                             style={{
-                                color: selectedId === project.id ? 'var(--accent)' : 'var(--text-secondary)',
+                                color: selectedId === project.id ? 'var(--foreground)' : 'var(--text-secondary)',
                                 opacity: selectedId === project.id ? 1 : 0.6,
                                 zIndex: 10,
                                 cursor: 'pointer'
                             }}
                         >
-                            <div className="d-flex flex-column pointer-events-none">
+                            <div className="d-flex flex-column pointer-events-none w-100">
                                 <motion.span
-                                    className="fw-bold text-uppercase mb-1"
-                                    style={{ fontSize: '1.2rem', transformOrigin: 'left', pointerEvents: 'auto' }}
+                                    className="text-uppercase mb-2"
+                                    style={{
+                                        fontSize: '1rem',
+                                        fontWeight: selectedId === project.id ? 500 : 300,
+                                        letterSpacing: '0.1em',
+                                        transformOrigin: 'left',
+                                        pointerEvents: 'auto'
+                                    }}
                                     whileHover={{ x: 5, color: 'var(--foreground)', opacity: 1 }}
                                     animate={{
                                         x: selectedId === project.id ? 5 : 0,
-                                        color: selectedId === project.id ? 'var(--accent)' : 'var(--text-secondary)'
+                                        color: selectedId === project.id ? 'var(--foreground)' : 'var(--text-secondary)'
                                     }}
                                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                 >
@@ -44,10 +50,9 @@ export default function ProjectSidebar({ selectedId, setSelectedId }: ProjectSid
 
                                 {/* Underline Animation */}
                                 <motion.div
-                                    className="rounded-pill"
                                     style={{
-                                        height: '2px',
-                                        backgroundColor: selectedId === project.id ? 'var(--accent)' : 'var(--foreground)',
+                                        height: '1px',
+                                        backgroundColor: 'var(--foreground)',
                                         originX: 0
                                     }}
                                     initial={{ scaleX: 0 }}

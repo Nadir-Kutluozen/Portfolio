@@ -63,8 +63,8 @@ function ProjectsContent() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                                className="w-100 min-h-100 p-3 p-lg-5"
-                                style={{ paddingTop: '100px' }}
+                                className="w-100 min-h-100 p-3 p-lg-5 pt-5 mt-5 pt-md-5 mt-md-5 pt-lg-5 mt-lg-5"
+                                style={{ paddingBottom: '100px' }}
                             >
                                 <div className="container-lg mx-auto" style={{ maxWidth: '1400px' }}>
 
@@ -87,13 +87,13 @@ function ProjectsContent() {
 
                                         {/* 1. MEDIA BLOCK (Large, spans full width or large portion) */}
                                         <div className="col-12 col-xl-8">
-                                            <div className="h-100 w-100 overflow-hidden position-relative" style={{ minHeight: '400px', aspectRatio: '16/9', border: '1px solid rgba(125, 125, 125, 0.2)', backgroundColor: 'var(--nav-bg)' }}>
+                                            <div className="w-100 overflow-hidden position-relative d-flex align-items-center justify-content-center" style={{ height: '100%', border: '1px solid rgba(125, 125, 125, 0.2)', backgroundColor: 'var(--nav-bg)' }}>
 
                                                 <Image
                                                     src={activeProject.image}
                                                     alt={activeProject.title}
                                                     fill
-                                                    className="object-fit-cover"
+                                                    style={{ objectFit: 'contain' }}
                                                 />
 
                                             </div>

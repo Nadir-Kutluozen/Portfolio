@@ -9,6 +9,7 @@ export interface Project {
     link: string; // Live URL
     repoUrl?: string; // GitHub URL
     image: string; // Thumbnail path
+    homepageimage?: string; // Homepage image path
     video?: string; // Video preview path
     technologies: { name: string; icon: LucideIcon }[]; // List of tech with icons
     tags: string[]; // Categories like "Frontend", "Full Stack"
@@ -23,6 +24,7 @@ export const projects: Project[] = [
         date: "2026-01",
         link: "https://www.banditanimation.com",
         image: "/banditthumb.png",
+        homepageimage: "/racoon(banditanimation).jpg",
         video: "/bandit-demo.mp4",
         technologies: [
             { name: "Next.js", icon: Layout },
@@ -39,6 +41,7 @@ export const projects: Project[] = [
         date: "2025-10",
         link: "https://example.com/openhand",
         image: "/openhand.png",
+        homepageimage: "/openhand(homepage).jpg",
         technologies: [
             { name: "React", icon: Code },
             { name: "Node.js", icon: Server },
@@ -52,6 +55,7 @@ export const projects: Project[] = [
         description: "A comprehensive healthcare brokerage platform tailored for medical professionals and clinics.",
         date: "2025-06",
         link: "https://example.com/medbrokerage",
+        homepageimage: "/oceanview(medbrokerage).jpg",
         image: "/medbrokerage.png",
         technologies: [
             { name: "Next.js", icon: Layout },
@@ -67,6 +71,7 @@ export const projects: Project[] = [
         date: "2024-11",
         link: "https://example.com/northshore",
         image: "/northshoreAviary.png",
+        homepageimage: "/birdsaviary(homepage).png",
         technologies: [
             { name: "Vue.js", icon: Code },
             { name: "Firebase", icon: Database },
@@ -81,6 +86,7 @@ export const projects: Project[] = [
         date: "2024-05",
         link: "https://example.com/punchcard",
         image: "/punchcard.png",
+        homepageimage: "/punchcard(homepage).png",
         technologies: [
             { name: "React Native", icon: Smartphone },
             { name: "GraphQL", icon: Zap },
@@ -95,6 +101,7 @@ export const projects: Project[] = [
         date: "2023-12",
         link: "https://example.com/coursecompare",
         image: "/onlinecoursecompare.png",
+        homepageimage: "/onlinecoursecompare(homepage).png",
         technologies: [
             { name: "Next.js", icon: Layout },
             { name: "Prisma", icon: Database },
