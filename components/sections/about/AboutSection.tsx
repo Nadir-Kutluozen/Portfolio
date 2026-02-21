@@ -2,6 +2,7 @@
 
 import styles from "./AboutSection.module.css";
 import { motion, Variants } from "framer-motion";
+import { CodeScanStew2 } from "@/components/animation/microanimation/CodeScanStew2";
 
 const textVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
@@ -34,6 +35,7 @@ export default function AboutSection() {
                                     ABOUT<br />ME
                                     <span className={styles.titleDecoration}></span>
                                 </h2>
+                                <CodeScanStew2 size={80} stroke="var(--foreground)" />
                             </motion.div>
                         </div>
                     </div>

@@ -70,6 +70,18 @@ export default function WorkTimeline() {
             className="position-relative d-flex flex-column"
             style={{ height: '100vh', overflowX: 'hidden' }}
         >
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                .timeline-card {
+                    aspect-ratio: 1 / 1.05;
+                }
+                @media (max-width: 768px) {
+                    .timeline-card {
+                        aspect-ratio: auto !important;
+                        width: 85vw !important;
+                    }
+                }
+            `}} />
             {/* Top 30% Header Area */}
             <div className="container d-flex flex-column justify-content-end pb-4" style={{ height: '30vh' }}>
                 <motion.div
@@ -81,9 +93,7 @@ export default function WorkTimeline() {
                     <h2 className="fw-light mb-1 text-uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', letterSpacing: '0.15em', color: 'var(--foreground)' }}>
                         Selected Works
                     </h2>
-                    <p className="mb-0 fs-5 fw-light" style={{ color: 'var(--text-secondary)' }}>
-                        A selection of my recent projects and experiments.
-                    </p>
+
                 </motion.div>
             </div>
 
@@ -149,9 +159,8 @@ export default function WorkTimeline() {
                             {sortedProjects.map((project, index) => (
                                 <motion.div
                                     key={project.id}
-                                    className="d-flex flex-column position-relative overflow-hidden group"
+                                    className="d-flex flex-column position-relative overflow-hidden group timeline-card"
                                     style={{
-                                        aspectRatio: '1 / 1.05', // Near square ratio
                                         height: '100%',
                                         backgroundColor: 'var(--nav-bg)',
                                         borderRight: index === sortedProjects.length - 1 ? 'none' : '1px solid rgba(125, 125, 125, 0.2)',

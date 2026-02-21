@@ -1,7 +1,14 @@
+// WARNING: Element ID "path-1-ya5b6" is LINKED to parent "action-wrapper-path-1-ya5b6" which has NO triggers. This element will not animate.
+// WARNING: Element ID "path-2-zzrdf" is LINKED to parent "action-wrapper-path-2-zzrdf" which has NO triggers. This element will not animate.
+// WARNING: Element ID "path-3-42c4h" is LINKED to parent "action-wrapper-path-3-42c4h" which has NO triggers. This element will not animate.
+// WARNING: Element ID "path-4-doxlm" is LINKED to parent "action-wrapper-path-4-doxlm" which has NO triggers. This element will not animate.
+
 "use client";
 
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
+
+const variants_group_1771653965276: Variants = {};
 
 const variants_group_1771647434299: Variants = {
     initial: {},
@@ -35,9 +42,20 @@ const variants_path_1_ya5b6: Variants = {
                 ease: "linear"
             },
             duration: 0.6922326667204881
+        },
+        scale: 1
+    },
+    whileHover: {
+        scale: [1, 1.2],
+        transition: {
+            scale: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            duration: 0.20149495463225478
         }
     },
-    whileHover: {},
     whileTap: {}
 };
 
@@ -52,9 +70,20 @@ const variants_path_2_zzrdf: Variants = {
                 ease: "linear"
             },
             duration: 0.6922326667204881
+        },
+        scale: 1
+    },
+    whileHover: {
+        scale: [1, 1.2],
+        transition: {
+            scale: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            duration: 0.20149495463225478
         }
     },
-    whileHover: {},
     whileTap: {}
 };
 
@@ -69,9 +98,20 @@ const variants_path_3_42c4h: Variants = {
                 ease: "linear"
             },
             duration: 0.6922326667204881
+        },
+        scale: 1
+    },
+    whileHover: {
+        scale: [1, 1.2],
+        transition: {
+            scale: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            duration: 0.20149495463225478
         }
     },
-    whileHover: {},
     whileTap: {}
 };
 
@@ -86,9 +126,20 @@ const variants_path_4_doxlm: Variants = {
                 ease: "linear"
             },
             duration: 0.6922326667204881
+        },
+        scale: 1
+    },
+    whileHover: {
+        scale: [1, 1.2],
+        transition: {
+            scale: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            duration: 0.20149495463225478
         }
     },
-    whileHover: {},
     whileTap: {}
 };
 
@@ -135,9 +186,34 @@ const variants_path_5_sy9u0: Variants = {
                 ease: "linear"
             },
             duration: 0.6922326667204881
-        }
+        },
+        scale: 1,
+        x: 0,
+        y: 0
     },
-    whileHover: {},
+    whileHover: {
+        scale: [1, 1.3],
+        transition: {
+            scale: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            x: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            y: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            duration: 0.20149495463225478
+        },
+        x: [0, 2],
+        y: [0, 2]
+    },
     whileTap: {}
 };
 
@@ -152,9 +228,34 @@ const variants_path_6_a04w7: Variants = {
                 ease: "linear"
             },
             duration: 0.6922326667204881
-        }
+        },
+        x: 0,
+        y: 0,
+        scale: 1
     },
-    whileHover: {},
+    whileHover: {
+        x: [0, -2],
+        transition: {
+            x: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            y: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            scale: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            duration: 0.20149495463225478
+        },
+        y: [0, 2],
+        scale: [1, 1.2]
+    },
     whileTap: {}
 };
 
@@ -169,9 +270,34 @@ const variants_path_7_yi1f8: Variants = {
                 ease: "linear"
             },
             duration: 0.6922326667204881
-        }
+        },
+        x: 0,
+        y: 0,
+        scale: 1
     },
-    whileHover: {},
+    whileHover: {
+        x: [0, -2],
+        transition: {
+            x: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            y: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            scale: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            duration: 0.20149495463225478
+        },
+        y: [0, -2],
+        scale: [1, 1.2]
+    },
     whileTap: {}
 };
 
@@ -186,9 +312,34 @@ const variants_path_8_zs69b: Variants = {
                 ease: "linear"
             },
             duration: 0.6922326667204881
-        }
+        },
+        x: 0,
+        y: 0,
+        scale: 1
     },
-    whileHover: {},
+    whileHover: {
+        x: [0, 3],
+        transition: {
+            x: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            y: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            scale: {
+                duration: 0.20149495463225478,
+                times: [0, 1],
+                ease: "linear"
+            },
+            duration: 0.20149495463225478
+        },
+        y: [0, -2],
+        scale: [1, 1.2]
+    },
     whileTap: {}
 };
 
@@ -198,7 +349,7 @@ interface CodeScanStewProps extends React.SVGProps<SVGSVGElement> {
     fill?: string;
 }
 
-export const CodeScanStew = ({ size, width, height, stroke, fill, ...props }: CodeScanStewProps) => {
+export const CodeScanStew2 = ({ size, width, height, stroke, fill, ...props }: CodeScanStewProps) => {
 
     // INTERACTIVE & BEHAVIORAL ACTIONS
     React.useEffect(() => {
@@ -284,11 +435,13 @@ export const CodeScanStew = ({ size, width, height, stroke, fill, ...props }: Co
 
     return (
         <svg width={width || size || "300"} height={height || size || "300"} {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={fill || "none"} overflow="visible" id="svg-root-6lyu7955e">
-            <motion.g xmlns="" id="group-1771647434299" data-name="inner" name="inner" variants={variants_group_1771647434299} initial="initial" animate="animate"><g xmlns="http://www.w3.org/2000/svg" id="action-wrapper-path-1-ya5b6"><motion.path xmlns="" d="M 5.5 15.5 C 5.5 14.557 5.5 14.086 5.793 13.793 C 6.086 13.5 6.557 13.5 7.5 13.5 H 8.5 C 9.443 13.5 9.914 13.5 10.207 13.793 C 10.5 14.086 10.5 14.557 10.5 15.5 V 16.5 C 10.5 17.443 10.5 17.914 10.207 18.207 C 9.914 18.5 9.443 18.5 8.5 18.5 C 7.086 18.5 6.379 18.5 5.939 18.061 C 5.5 17.621 5.5 16.914 5.5 15.5 Z" stroke={stroke || "#1C274C"} strokeWidth="1.5" id="path-1-ya5b6" variants={variants_path_1_ya5b6} initial="initial" animate="animate" /></g><g xmlns="http://www.w3.org/2000/svg" id="action-wrapper-path-2-zzrdf"><motion.path xmlns="" d="M 5.5 8.5 C 5.5 7.086 5.5 6.379 5.939 5.939 C 6.379 5.5 7.086 5.5 8.5 5.5 C 9.443 5.5 9.914 5.5 10.207 5.793 C 10.5 6.086 10.5 6.557 10.5 7.5 V 8.5 C 10.5 9.443 10.5 9.914 10.207 10.207 C 9.914 10.5 9.443 10.5 8.5 10.5 H 7.5 C 6.557 10.5 6.086 10.5 5.793 10.207 C 5.5 9.914 5.5 9.443 5.5 8.5 Z" stroke={stroke || "#1C274C"} strokeWidth="1.5" id="path-2-zzrdf" variants={variants_path_2_zzrdf} initial="initial" animate="animate" /></g><g xmlns="http://www.w3.org/2000/svg" id="action-wrapper-path-3-42c4h"><motion.path xmlns="" d="M 13.5 15.5 C 13.5 14.557 13.5 14.086 13.793 13.793 C 14.086 13.5 14.557 13.5 15.5 13.5 H 16.5 C 17.443 13.5 17.914 13.5 18.207 13.793 C 18.5 14.086 18.5 14.557 18.5 15.5 C 18.5 16.914 18.5 17.621 18.061 18.061 C 17.621 18.5 16.914 18.5 15.5 18.5 C 14.557 18.5 14.086 18.5 13.793 18.207 C 13.5 17.914 13.5 17.443 13.5 16.5 V 15.5 Z" stroke={stroke || "#1C274C"} strokeWidth="1.5" id="path-3-42c4h" variants={variants_path_3_42c4h} initial="initial" animate="animate" /></g><g xmlns="http://www.w3.org/2000/svg" id="action-wrapper-path-4-doxlm"><motion.path xmlns="" d="M 13.5 7.5 C 13.5 6.557 13.5 6.086 13.793 5.793 C 14.086 5.5 14.557 5.5 15.5 5.5 C 16.914 5.5 17.621 5.5 18.061 5.939 C 18.5 6.379 18.5 7.086 18.5 8.5 C 18.5 9.443 18.5 9.914 18.207 10.207 C 17.914 10.5 17.443 10.5 16.5 10.5 H 15.5 C 14.557 10.5 14.086 10.5 13.793 10.207 C 13.5 9.914 13.5 9.443 13.5 8.5 V 7.5 Z" stroke={stroke || "#1C274C"} strokeWidth="1.5" id="path-4-doxlm" variants={variants_path_4_doxlm} initial="initial" animate="animate" /></g></motion.g>
+            <motion.g xmlns="" id="group-1771653965276" data-name="New Group" variants={variants_group_1771653965276} initial="initial" animate="animate" whileHover="whileHover" whileTap="whileTap" pointerEvents="bounding-box"><motion.g id="group-1771647434299" data-name="inner" name="inner" variants={variants_group_1771647434299} pointerEvents="bounding-box"><g xmlns="http://www.w3.org/2000/svg" id="action-wrapper-path-1-ya5b6"><motion.path xmlns="" d="M 5.5 15.5 C 5.5 14.557 5.5 14.086 5.793 13.793 C 6.086 13.5 6.557 13.5 7.5 13.5 H 8.5 C 9.443 13.5 9.914 13.5 10.207 13.793 C 10.5 14.086 10.5 14.557 10.5 15.5 V 16.5 C 10.5 17.443 10.5 17.914 10.207 18.207 C 9.914 18.5 9.443 18.5 8.5 18.5 C 7.086 18.5 6.379 18.5 5.939 18.061 C 5.5 17.621 5.5 16.914 5.5 15.5 Z" stroke={stroke || "#1C274C"} strokeWidth="1.5" id="path-1-ya5b6" variants={variants_path_1_ya5b6} /></g><g xmlns="http://www.w3.org/2000/svg" id="action-wrapper-path-2-zzrdf"><motion.path xmlns="" d="M 5.5 8.5 C 5.5 7.086 5.5 6.379 5.939 5.939 C 6.379 5.5 7.086 5.5 8.5 5.5 C 9.443 5.5 9.914 5.5 10.207 5.793 C 10.5 6.086 10.5 6.557 10.5 7.5 V 8.5 C 10.5 9.443 10.5 9.914 10.207 10.207 C 9.914 10.5 9.443 10.5 8.5 10.5 H 7.5 C 6.557 10.5 6.086 10.5 5.793 10.207 C 5.5 9.914 5.5 9.443 5.5 8.5 Z" stroke={stroke || "#1C274C"} strokeWidth="1.5" id="path-2-zzrdf" variants={variants_path_2_zzrdf} /></g><g xmlns="http://www.w3.org/2000/svg" id="action-wrapper-path-3-42c4h"><motion.path xmlns="" d="M 13.5 15.5 C 13.5 14.557 13.5 14.086 13.793 13.793 C 14.086 13.5 14.557 13.5 15.5 13.5 H 16.5 C 17.443 13.5 17.914 13.5 18.207 13.793 C 18.5 14.086 18.5 14.557 18.5 15.5 C 18.5 16.914 18.5 17.621 18.061 18.061 C 17.621 18.5 16.914 18.5 15.5 18.5 C 14.557 18.5 14.086 18.5 13.793 18.207 C 13.5 17.914 13.5 17.443 13.5 16.5 V 15.5 Z" stroke={stroke || "#1C274C"} strokeWidth="1.5" id="path-3-42c4h" variants={variants_path_3_42c4h} /></g><g xmlns="http://www.w3.org/2000/svg" id="action-wrapper-path-4-doxlm"><motion.path xmlns="" d="M 13.5 7.5 C 13.5 6.557 13.5 6.086 13.793 5.793 C 14.086 5.5 14.557 5.5 15.5 5.5 C 16.914 5.5 17.621 5.5 18.061 5.939 C 18.5 6.379 18.5 7.086 18.5 8.5 C 18.5 9.443 18.5 9.914 18.207 10.207 C 17.914 10.5 17.443 10.5 16.5 10.5 H 15.5 C 14.557 10.5 14.086 10.5 13.793 10.207 C 13.5 9.914 13.5 9.443 13.5 8.5 V 7.5 Z" stroke={stroke || "#1C274C"} strokeWidth="1.5" id="path-4-doxlm" variants={variants_path_4_doxlm} /></g></motion.g><motion.g id="group-1771647485490" data-name="outer" name="outer" variants={variants_group_1771647485490} pointerEvents="bounding-box"><motion.path d="M 22 14 C 22 17.771 22 19.657 20.828 20.828 C 19.657 22 17.771 22 14 22" stroke={stroke || "#1C274C"} strokeWidth="1.5" strokeLinecap="round" id="path-5-sy9u0" variants={variants_path_5_sy9u0} /><motion.path d="M 10 22 C 6.229 22 4.343 22 3.172 20.828 C 2 19.657 2 17.771 2 14" stroke={stroke || "#1C274C"} strokeWidth="1.5" strokeLinecap="round" id="path-6-a04w7" variants={variants_path_6_a04w7} /><motion.path d="M 10 2 C 6.229 2 4.343 2 3.172 3.172 C 2 4.343 2 6.229 2 10" stroke={stroke || "#1C274C"} strokeWidth="1.5" strokeLinecap="round" id="path-7-yi1f8" variants={variants_path_7_yi1f8} /><motion.path d="M 14 2 C 17.771 2 19.657 2 20.828 3.172 C 22 4.343 22 6.229 22 10" stroke={stroke || "#1C274C"} strokeWidth="1.5" strokeLinecap="round" id="path-8-zs69b" variants={variants_path_8_zs69b} /></motion.g></motion.g>
 
 
 
-            <motion.g xmlns="" id="group-1771647485490" data-name="outer" name="outer" variants={variants_group_1771647485490} initial="initial" animate="animate"><motion.path d="M 22 14 C 22 17.771 22 19.657 20.828 20.828 C 19.657 22 17.771 22 14 22" stroke={stroke || "#1C274C"} strokeWidth="1.5" strokeLinecap="round" id="path-5-sy9u0" variants={variants_path_5_sy9u0} initial="initial" animate="animate" /><motion.path d="M 10 22 C 6.229 22 4.343 22 3.172 20.828 C 2 19.657 2 17.771 2 14" stroke={stroke || "#1C274C"} strokeWidth="1.5" strokeLinecap="round" id="path-6-a04w7" variants={variants_path_6_a04w7} initial="initial" animate="animate" /><motion.path d="M 10 2 C 6.229 2 4.343 2 3.172 3.172 C 2 4.343 2 6.229 2 10" stroke={stroke || "#1C274C"} strokeWidth="1.5" strokeLinecap="round" id="path-7-yi1f8" variants={variants_path_7_yi1f8} initial="initial" animate="animate" /><motion.path d="M 14 2 C 17.771 2 19.657 2 20.828 3.172 C 22 4.343 22 6.229 22 10" stroke={stroke || "#1C274C"} strokeWidth="1.5" strokeLinecap="round" id="path-8-zs69b" variants={variants_path_8_zs69b} initial="initial" animate="animate" /></motion.g>
+
+
+
 
         </svg>
     );

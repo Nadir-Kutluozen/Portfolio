@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CodeScanStew } from "../animation/microanimation/CodeScanStew";
+import { CodeScanStew2 } from "../animation/microanimation/CodeScanStew2";
 
 export default function PageLoader() {
     const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +31,7 @@ export default function PageLoader() {
                     }}
                 >
                     <div className="d-flex flex-column align-items-center justify-content-center flex-grow-1">
-                        <CodeScanStew size={120} stroke="#000000" />
+                        <CodeScanStew2 size={120} stroke="#000000" />
                     </div>
 
                     {/* Bottom message */}
