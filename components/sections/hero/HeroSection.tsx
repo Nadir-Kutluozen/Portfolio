@@ -115,11 +115,11 @@ export default function HeroSection() {
                         <div className={`col-12 col-md-6 text-center text-md-start order-2 order-md-3 ps-md-4 d-flex flex-column ${styles.textContentWrapper}`}>
                             <div>
                                 <motion.h2 className={`${styles.subtitle} text-md-start`} variants={itemVariants}>
-                                    Full Stack Software<br />and Design Engineer
+                                    Full Stack Software<br />& Design Engineer
                                 </motion.h2>
 
-                                <motion.p className={`${styles.bio} mx-auto mx-md-0 text-md-start mt-4`} style={{ maxWidth: '480px' }} variants={itemVariants}>
-                                    I build digital products that look good and work even better. Merging technical depth with creative design.
+                                <motion.p className={`${styles.bio} mx-auto mx-md-0 text-md-start mt-4`} style={{ maxWidth: '460px' }} variants={itemVariants}>
+                                    For the highly interactive web applications and exploring AI interpretability, I somehow find a way to bridge the gap.
                                 </motion.p>
                             </div>
 

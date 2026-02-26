@@ -2,8 +2,8 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { projects } from "@/data/projects";
-import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
-import { ArrowUpRight, Github } from "lucide-react";
+import { motion, useMotionValue, useMotionValueEvent, useSpring } from "framer-motion";
+import { ArrowUpRight, Github, MoveHorizontal } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import PixelTransition from "@/components/animation/microanimation/PixelTransition";
@@ -13,6 +13,29 @@ export default function WorkTimeline() {
     const [dragWidth, setDragWidth] = useState(0);
     const x = useMotionValue(0);
     const [isScrolled, setIsScrolled] = useState(false);
+
+    // Custom Cursor State
+    const [isHovering, setIsHovering] = useState(false);
+    const cursorX = useMotionValue(-100);
+    const cursorY = useMotionValue(-100);
+
+    // Smooth cursor movement
+    const springConfig = { damping: 28, stiffness: 400, mass: 0.5 };
+    const cursorXSpring = useSpring(cursorX, springConfig);
+    const cursorYSpring = useSpring(cursorY, springConfig);
+
+    useEffect(() => {
+        const moveCursor = (e: MouseEvent) => {
+            cursorX.set(e.clientX);
+            cursorY.set(e.clientY);
+        };
+
+        window.addEventListener('mousemove', moveCursor);
+
+        return () => {
+            window.removeEventListener('mousemove', moveCursor);
+        };
+    }, [cursorX, cursorY]);
 
     useMotionValueEvent(x, "change", (latest) => {
         setIsScrolled(latest < -10);
@@ -97,6 +120,30 @@ export default function WorkTimeline() {
                 </motion.div>
             </div>
 
+            {/* Custom Drag Cursor */}
+            <motion.div
+                className="position-fixed d-none d-lg-flex align-items-center justify-content-center flex-column shadow-lg"
+                style={{
+                    left: 0,
+                    top: 0,
+                    width: '90px',
+                    height: '90px',
+                    backgroundColor: 'var(--foreground)',
+                    color: 'var(--background)',
+                    x: cursorXSpring,
+                    y: cursorYSpring,
+                    marginLeft: '-45px',
+                    marginTop: '-45px',
+                    opacity: isHovering ? 1 : 0,
+                    scale: isHovering ? 1 : 0.5,
+                    pointerEvents: 'none',
+                    zIndex: 9999,
+                }}
+            >
+                <MoveHorizontal size={24} className="mb-1" />
+                <span className="fw-light text-uppercase" style={{ letterSpacing: '0.1em', fontSize: '0.9rem' }}>Drag</span>
+            </motion.div>
+
             {/* Bottom 70% Carousel Area */}
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -114,8 +161,8 @@ export default function WorkTimeline() {
                         className="position-absolute top-0 bottom-0"
                         style={{
                             left: 0,
-                            width: '40px',
-                            background: 'linear-gradient(to right, var(--background) 0%, transparent 100%)',
+                            width: '10px',
+                            background: 'linear-gradient(to right, rgba(255, 255, 255, 0.1) 0%, transparent 100%)',
                             zIndex: 10,
                             opacity: isScrolled ? 0.4 : 0,
                             transition: 'opacity 0.3s ease',
@@ -128,8 +175,8 @@ export default function WorkTimeline() {
                         className="position-absolute top-0 bottom-0"
                         style={{
                             right: 0,
-                            width: '40px',
-                            background: 'linear-gradient(to left, var(--background) 0%, transparent 100%)',
+                            width: '10px',
+                            background: 'linear-gradient(to left, rgba(255, 255, 255, 0.1) 0%, transparent 100%)',
                             zIndex: 10,
                             opacity: 0.4,
                             pointerEvents: 'none'
@@ -140,9 +187,11 @@ export default function WorkTimeline() {
                         ref={carouselRef}
                         className="h-100 w-100 overflow-hidden"
                         style={{
-                            cursor: "grab",
+                            cursor: "none",
                         }}
-                        whileTap={{ cursor: "grabbing" }}
+                        whileTap={{ cursor: "none" }}
+                        onMouseEnter={() => setIsHovering(true)}
+                        onMouseLeave={() => setIsHovering(false)}
                     >
                         <motion.div
                             drag="x"
@@ -152,7 +201,7 @@ export default function WorkTimeline() {
                                 width: "max-content",
                             }}
                             dragConstraints={{ right: 0, left: -dragWidth }}
-                            dragElastic={0.15}
+                            dragElastic={0.2}
                             dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
                         >
                             {/* The projects array is mapped to create the massive flush cards */}
@@ -174,7 +223,7 @@ export default function WorkTimeline() {
                                     <PixelTransition
                                         gridSize={10}
                                         pixelColor="var(--foreground)"
-                                        animationStepDuration={0.3}
+                                        animationStepDuration={0.15}
                                         aspectRatio="0"
                                         className="position-absolute w-100 h-100 top-0 start-0 z-0"
                                         firstContent={
@@ -199,7 +248,7 @@ export default function WorkTimeline() {
                                         }
                                         secondContent={
                                             <div className="w-100 h-100 d-flex align-items-center justify-content-center" style={{ backgroundColor: 'var(--foreground)' }}>
-                                                <h3 className="display-3 fw-bold text-uppercase m-0 text-center px-4" style={{ color: 'var(--background)' }}>
+                                                <h3 className="display-6 fw-light text-uppercase m-0 text-center px-4" style={{ color: 'var(--background)', letterSpacing: '0.1em' }}>
                                                     {project.title}
                                                 </h3>
                                             </div>
@@ -218,7 +267,10 @@ export default function WorkTimeline() {
                                                 border: 'none',
                                                 fontSize: '1.1rem',
                                                 padding: '1.5rem 3rem',
+                                                cursor: 'pointer'
                                             }}
+                                                onMouseEnter={() => setIsHovering(false)}
+                                                onMouseLeave={() => setIsHovering(true)}
                                                 draggable={false}
                                             >
                                                 Learn More <ArrowUpRight size={22} className="ms-2" />

@@ -7,6 +7,7 @@ import { useTheme } from "@/context/ThemeProvider";
 import { projects } from "@/data/projects";
 import DynamicButton from "@/components/ui/DynamicButton";
 import BlobAnimation from "@/components/animation/microanimation/BlobAnimation";
+import CallToAction from "@/components/sections/cta/CallToAction";
 
 export default function AboutPage() {
     const { theme } = useTheme();
@@ -310,54 +311,8 @@ export default function AboutPage() {
                     </motion.div>
 
                     {/* 6. CTA Footer (Bottom - Full Width) */}
-                    <motion.div variants={itemVariants} className="col-12">
-                        <div className="p-5 border border-secondary border-opacity-25 shadow-sm text-center d-flex flex-column align-items-center justify-content-center overflow-hidden position-relative "
-                            style={{
-                                backgroundColor: 'var(--nav-bg)',
-                                minHeight: '250px'
-                            }}>
-                            {/* Ambient Background blob */}
-                            <BlobAnimation
-                                color="var(--blob-color)"
-                                size="300px"
-                                blur="3px"
-                                borderRadius="50% 50% 60% 40% / 60% 40% 50% 50%"
-                                transition="linear"
-                                className="opacity-75"
-                                duration={10}
-                            />
-                            <BlobAnimation
-                                color="var(--blob-color)"
-                                size="350px"
-                                blur="3px"
-                                borderRadius="60% 40% 30% 70% / 50% 60% 40% 50%"
-                                transition="linear"
-                                className="opacity-75"
-                                duration={8}
-                            />
-                            <BlobAnimation
-                                color="var(--blob-color)"
-                                size="400px"
-                                blur="3px"
-                                borderRadius="50% 50% 60% 40% / 60% 40% 50% 50%"
-                                transition="linear"
-                                className="opacity-75"
-                                duration={6}
-                            />
-
-                            <div className="z-1 position-relative d-flex flex-column align-items-center">
-                                <h2 className="display-5 fw-light text-uppercase mb-3" style={{ fontFamily: 'var(--font-couplin)', letterSpacing: '0.05em' }}>
-                                    Got a Vision?
-                                </h2>
-                                <p className="lead opacity-75 mb-4 fw-light">Let's turn that idea into a digital reality.</p>
-                                <DynamicButton
-                                    href="mailto:nadir@example.com"
-                                    className="btn btn-lg btn-dark fw-bold text-uppercase tracking-wider shadow-sm d-inline-flex align-items-center px-5 py-3 "
-                                >
-                                    Let's Talk <ArrowUpRight className="ms-2" size={20} />
-                                </DynamicButton>
-                            </div>
-                        </div>
+                    <motion.div variants={itemVariants} className="col-12 mt-5">
+                        <CallToAction title="Did you have something in mind?" description="Let's connect and dicsuss how I can help you." buttonTitle="Connect Me" buttonLink="/contact" />
                     </motion.div>
 
                 </motion.div>

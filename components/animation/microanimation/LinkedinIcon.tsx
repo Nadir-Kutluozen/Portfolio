@@ -9,7 +9,8 @@ const variants_path_2_zv9hz: Variants = {
     initial: {},
     animate: {
         fill: "#00000000",
-        stroke: "#000000",
+        stroke: "var(--foreground)",
+        strokeWidth: "2",
         transition: {
             duration: 0.5
         },
@@ -37,11 +38,12 @@ const variants_rect_3_3j7q9: Variants = {
     initial: {},
     animate: {
         fill: "#00000000",
-        stroke: "#000000",
+        stroke: "var(--foreground)",
+        strokeWidth: "2",
         transition: {
             duration: 0.5
         },
-        pathLength: 2
+        pathLength: 1
     },
     whileHover: {
         pathLength: [1, 0, 1],
@@ -61,12 +63,12 @@ const variants_path_4_n01u3: Variants = {
     initial: {},
     animate: {
         fill: "#00000000",
-        stroke: "#000000",
-
+        stroke: "var(--foreground)",
+        strokeWidth: "2",
         transition: {
             duration: 0.5
         },
-        pathLength: 2
+        pathLength: 1
     },
     whileHover: {
         pathLength: [1, 0, 1],
@@ -89,7 +91,8 @@ const variants_circle_5_ubiev: Variants = {
     },
     animate: {
         fill: "#00000000",
-        stroke: "#000000",
+        stroke: "var(--foreground)",
+        strokeWidth: "2",
         transition: {
             duration: 0.5
         },

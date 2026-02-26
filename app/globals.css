@@ -5,6 +5,7 @@
     --accent: #00aa39;
     --nav-bg: #F5F5F7;
     --blob-color: #5cff92;
+    --blob-color-2: #cfffdf;
 }
 
 [data-theme='dark'] {
@@ -14,6 +15,7 @@
     --nav-bg: #1A1A1B;
     --accent: #c64aff;
     --blob-color: #d16fff;
+    --blob-color-2: #e8b6ff;
 
     /* Solid Lighter Dark */
     transition: background-color 0.9s ease, color 0.9s ease;

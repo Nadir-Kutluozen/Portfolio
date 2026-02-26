@@ -13,6 +13,8 @@ export interface Project {
     video?: string; // Video preview path
     technologies: { name: string; icon: LucideIcon }[]; // List of tech with icons
     tags: string[]; // Categories like "Frontend", "Full Stack"
+    role?: string[];
+    type?: string;
 }
 
 export const projects: Project[] = [
@@ -20,7 +22,7 @@ export const projects: Project[] = [
         id: "1",
         title: "Bandit Animation",
         description: "A Visual Animation tool that lets you animate your static SVG and export as React Component",
-        longDescription: "Built with Next.js and Framer Motion, this dashboard visualizes complex datasets in real-time. It features a custom-built charting library, dark mode by default, and a responsive bento-grid layout.",
+        longDescription: "What originally inspired me to build this software tool was an everyday problem I had grown tired of facing. Often, for school and work, I’m required to animate static SVGs. Doing this meant I’d be spending half of the day using heavy tools with long runtimes just to always end up hitting an enormous paywall at the end of my efforts. I wanted to build my own tool that gave users like me an upfront price and trial opportunity! I’ve created a solution for all the coders out there who are tired of not being able to see the animations they are coding. Bandit Animation is a software tool for anyone who wants to see in real time what their code is creating!",
         date: "2026-01",
         link: "https://www.banditanimation.com",
         image: "/banditthumb.png",
@@ -29,84 +31,169 @@ export const projects: Project[] = [
         technologies: [
             { name: "Next.js", icon: Layout },
             { name: "TypeScript", icon: Code },
-            { name: "Framer Motion", icon: Layers },
-            { name: "D3.js", icon: Box }
+            { name: "Motion", icon: Code },
+            { name: "Three.js", icon: Code },
+            { name: "Bootstrap", icon: Layers },
+            { name: "PostgreSQL", icon: Database },
+            { name: "Supabase", icon: Database },
+            { name: "Vercel", icon: Database },
+            { name: "Stripe", icon: Box },
+            { name: "RESTful API", icon: Server }
         ],
-        tags: ["Full Stack", "Data Viz"]
+        tags: ["Full Stack", "Animation", "SaaS"],
+        role: ["Full Stack Developer", "Founder"],
+        type: "Web Application"
     },
     {
         id: "2",
         title: "OpenHand",
-        description: "An intuitive platform designed for open-source project management and seamless developer collaboration.",
+        description: "An Open Source real-time ASL Learning Tool that Designed to teach you sign language in Fun way!",
+        longDescription: "OpenHand was a special project for me because it was the first time I was able to combine my interests in machine learning and education. I trained the Random Forest classifier using MediaPipe and OpenCV, and actually looked inside it instead of treating it like a black box. The tricky part was making it run live. The Python backend was processing frames while the Next.js frontend expected instant predictions. At first it lagged and felt clunky. I had to clean up the socket flow, reduce unnecessary data, and optimize how the frontend and backend talked to each other. That right there show me how signiofact the data flwo between parts of the code in itself",
         date: "2025-10",
-        link: "https://example.com/openhand",
+        link: "https://openhand-eight.vercel.app/",
         image: "/openhand.png",
         homepageimage: "/openhand(homepage).jpg",
         technologies: [
-            { name: "React", icon: Code },
-            { name: "Node.js", icon: Server },
-            { name: "PostgreSQL", icon: Database }
+            { name: "TypeScript", icon: Code },
+            { name: "Python", icon: Server },
+            { name: "Firebase", icon: Database },
+            { name: "PyTorch", icon: Layers },
+            { name: "MediaPipe", icon: Layers },
+            { name: "HTML", icon: Code },
+            { name: "CSS", icon: Code },
+            { name: "RESTful API", icon: Server },
+            { name: "FastAPI", icon: Layers },
+            { name: "Bootstrap", icon: Layers },
+            { name: "Render", icon: Database }
         ],
-        tags: ["Open Source", "Platform"]
+        tags: ["Open Source", "Random Forest", "AI", "Machine Learning", "Education"],
+        role: ["Full Stack Developer", "Founder"],
+        type: "Web Application"
     },
     {
         id: "3",
-        title: "MedBrokerage",
-        description: "A comprehensive healthcare brokerage platform tailored for medical professionals and clinics.",
-        date: "2025-06",
-        link: "https://example.com/medbrokerage",
+        title: "Med Brokerage",
+        description: "A professinoal Front-end Website for a Dry bulk Shipping comany",
+        longDescription: "This project required me to work one-on-one with the client and decide what was best for them, including how they could market and present themselves effectively. This was done under the company Domino Media.",
+        date: "2024-11",
+        link: "https://medbrokerage.com/",
         homepageimage: "/oceanview.jpg",
         image: "/medbrokerage.png",
         technologies: [
-            { name: "Next.js", icon: Layout },
-            { name: "TypeScript", icon: Code },
-            { name: "TailwindCSS", icon: Layers }
+            { name: "PHP", icon: Code },
+            { name: "JavaScript", icon: Code },
+            { name: "TailwindCSS", icon: Layers },
+            { name: "Bootstrap", icon: Layers },
+            { name: "HTML", icon: Code },
+            { name: "CSS", icon: Code }
+
         ],
-        tags: ["Healthcare", "B2B"]
+        tags: ["Web Design", "Web Development"],
+        role: ["Front-end Developer"],
+        type: "Website"
     },
     {
         id: "4",
         title: "Northshore Aviary",
-        description: "An engaging and visually rich website built for managing bird conservation and aviary data.",
-        date: "2024-11",
-        link: "https://example.com/northshore",
+        description: "A professinoal Front-end Website for a Bird Shipping company",
+        longDescription: "This project required me to work directly with the client to understand their bird shipping business and how they wanted to present themselves online. We discussed branding, trust, and how to clearly communicate their services to customers. I helped shape the structure and layout of the site to highlight professionalism and reliability. This was completed under Domino Media.",
+        date: "2024-12",
+        link: "https://northshoreaviary.com",
         image: "/northshoreAviary.png",
         homepageimage: "/birdsaviary(homepage).png",
         technologies: [
-            { name: "Vue.js", icon: Code },
-            { name: "Firebase", icon: Database },
-            { name: "Figma", icon: Box }
+            { name: "PHP", icon: Code },
+            { name: "JavaScript", icon: Code },
+            { name: "TailwindCSS", icon: Layers },
+            { name: "Bootstrap", icon: Layers },
+            { name: "HTML", icon: Code },
+            { name: "CSS", icon: Code }
         ],
-        tags: ["Conservation", "Web App"]
+        tags: ["Conservation", "Web App"],
+        role: ["Front-end Developer"],
+        type: "Website"
     },
     {
         id: "5",
-        title: "Punchcard",
-        description: "A modern time-tracking and employee management application focusing on minimal workflows.",
-        date: "2024-05",
-        link: "https://example.com/punchcard",
-        image: "/punchcard.png",
-        homepageimage: "/punchcard(homepage).png",
+        title: "Deniz Trading Corporation",
+        date: "2024-11",
+        description: "A professinoal Front-end Website for a Dry Bulk Shipping company",
+        longDescription: "A professinoal Front-end Website for a Dry Bulk Shipping company. This project required me to work directly with the client to understand their dry bulk shipping business and how they wanted to present themselves online. We discussed branding, trust, and how to clearly communicate their services to customers. I helped shape the structure and layout of the site to highlight professionalism and reliability. This was completed under Domino Media.",
+        link: "https://deniztradingco.com",
+        image: "/deniztradingco.png",
+        homepageimage: "/deniztradingco(homepage).png",
         technologies: [
-            { name: "React Native", icon: Smartphone },
-            { name: "GraphQL", icon: Zap },
-            { name: "Node.js", icon: Server }
+            { name: "PHP", icon: Code },
+            { name: "JavaScript", icon: Code },
+            { name: "TailwindCSS", icon: Layers },
+            { name: "Bootstrap", icon: Layers },
+            { name: "HTML", icon: Code },
+            { name: "CSS", icon: Code }
         ],
-        tags: ["Mobile App", "Productivity"]
+        tags: ["Web Design", "Web Development"],
+        role: ["Front-end Developer"],
+        type: "Website"
     },
     {
         id: "6",
+        title: "Punchcard",
+        description: "A Loyalty App that creates Digital Punchcards for a local businesses and shops to boost the engegement of customers",
+        longDescription: "PunchCard was a project I started when I was working in restaurants. I always thought about how a specific restaurant could make more money, and the answer felt simple: “Hey, we remember you. Here’s your reward for coming back. The problem was that they were still giving out physical punch cards instead of digital ones, which are more secure and harder to fake. I wanted to bring that idea not just to one restaurant, but to all of them.",
+        date: "2024-05",
+        link: "http://54.147.192.29/",
+        image: "/punchcard.png",
+        homepageimage: "/punchcard(homepage).png",
+        technologies: [
+            { name: "React", icon: Code },
+            { name: "MongoDB", icon: Database },
+            { name: "Node.js", icon: Server },
+            { name: "HTML", icon: Code },
+            { name: "CSS", icon: Code },
+            { name: "JavaScript", icon: Code },
+            { name: "Bootstrap", icon: Layers },
+            { name: "RESTful API", icon: Server }
+        ],
+        tags: ["Mobile App", "Productivity"],
+        role: ["Full Stack Developer", "Founder"],
+        type: "Mobile Application, Web Application"
+    },
+    {
+        id: "7",
         title: "Course Compare",
-        description: "An analytics-driven directory for comparing online courses, complete with real-time reviews.",
+        description: "A directory for comparing online courses to pick the best one for you",
+        longDescription: "OnlineCourseCompare is my project to make online learning easier to compare without jumping between ten tabs. I built a pipeline that fetches course data from multiple platforms and turns it into one clean, searchable dataset. On the backend, I collect course links from category pages (including paginated results), then scrape the public course details like title, rating, instructor, image, level, and course URL. After that, I run a cleanup step to normalize everything, since each platform formats data differently. I remove duplicates, standardize fields (like ratings and durations), and tag each course by platform so it stays consistent in the database. To keep the listings fresh, I designed it so the scraper can run on a schedule, re-check categories, and update the stored data regularly. The goal is simple: give users a clean comparison experience, and give me a reliable data layer that stays up to date as courses change over time.",
         date: "2023-12",
-        link: "https://example.com/coursecompare",
+        link: "https://www.onlinecoursecompare.com/",
         image: "/onlinecoursecompare.png",
         homepageimage: "/onlinecoursecompare(homepage).png",
         technologies: [
             { name: "Next.js", icon: Layout },
-            { name: "Prisma", icon: Database },
-            { name: "TailwindCSS", icon: Layers }
+            { name: "Python", icon: Server },
+            { name: "Bootstrap", icon: Layers },
+            { name: "HTML", icon: Code },
+            { name: "CSS", icon: Code },
+            { name: "React.js", icon: Code },
+            { name: "RESTful API", icon: Server },
+            { name: "Beatifulsoup4", icon: Layers }
         ],
         tags: ["Education", "Directory"]
+    },
+    {
+        id: "8",
+        title: "Free NYC events",
+        description: "A Website for a local cafe",
+        longDescription: "My First Project (currently unavailable)This was a website I made for a local cafe. It was a simple website that I made for a local cafe. It was a simple website that I made for a local cafe. It was a simple website that I made for a local cafe.",
+        date: "2020-12",
+        link: "",
+        image: "/freenycevents.png",
+        homepageimage: "/freenycevents(homepage).jpg",
+        technologies: [
+            { name: "Bootstrap", icon: Layers },
+            { name: "HTML", icon: Code },
+            { name: "CSS", icon: Code }
+        ],
+        tags: ["Website", "Design"],
+        role: ["Front-end Developer"],
+        type: "Website"
     }
 ];

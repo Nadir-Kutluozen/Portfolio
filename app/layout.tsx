@@ -5,6 +5,7 @@ import BootstrapClient from "./BootstrapClient"; // Ensure this is imported
 import Navbar from "@/components/navbar/Navbar";
 import { NeonTunnel } from "@/components/sections/hero/NeonTunnel";
 import PageLoader from "@/components/ui/PageLoader";
+import Footer from "@/components/ui/Footer";
 
 export const metadata = {
   title: "Nadir Kutluozen",
@@ -23,7 +24,12 @@ export default function RootLayout({
           <PageLoader />
           <NeonTunnel />
           <Navbar />
-          {children}
+          <div style={{ flex: '1', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <main style={{ flex: '1' }}>
+              {children}
+            </main>
+            <Footer />
+          </div>
           <BootstrapClient />
         </ThemeProvider>
       </body>

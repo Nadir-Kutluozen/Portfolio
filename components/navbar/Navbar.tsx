@@ -35,7 +35,6 @@ export default function Navbar() {
     const navLinks = [
         { name: 'Projects', href: '/projects', icon: Briefcase },
         { name: 'About', href: '/about', icon: User },
-        { name: 'Hobbies', href: '/hobbies', icon: Heart },
         { name: 'Contact', href: '/contact', icon: Mail },
     ]
 

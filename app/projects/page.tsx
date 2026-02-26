@@ -32,7 +32,7 @@ function ProjectsContent() {
                 width: '100vw',
                 overflow: 'hidden',
                 color: 'var(--foreground)',
-                transition: 'background-color 0.3s ease, color 0.3s ease'
+                transition: 'background-color 0.3s ease, color 0.3s ease',
             }}
         >
             {/* Mobile Project Slider (Sticky Bottom) */}
@@ -87,15 +87,16 @@ function ProjectsContent() {
 
                                         {/* 1. MEDIA BLOCK (Large, spans full width or large portion) */}
                                         <div className="col-12 col-xl-8">
-                                            <div className="w-100 overflow-hidden position-relative d-flex align-items-center justify-content-center" style={{ height: '100%', border: '1px solid rgba(125, 125, 125, 0.2)', backgroundColor: 'var(--nav-bg)' }}>
-
-                                                <Image
-                                                    src={activeProject.image}
-                                                    alt={activeProject.title}
-                                                    fill
-                                                    style={{ objectFit: 'contain' }}
-                                                />
-
+                                            <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+                                                <div className="w-100 overflow-hidden" style={{ border: '1px solid rgba(125, 125, 125, 0.2)', backgroundColor: 'var(--nav-bg)' }}>
+                                                    <Image
+                                                        src={activeProject.image}
+                                                        alt={activeProject.title}
+                                                        width={1600}
+                                                        height={900}
+                                                        style={{ width: '100%', height: 'auto', display: 'block' }}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
 
@@ -131,7 +132,7 @@ function ProjectsContent() {
                                                     </div>
                                                     <div>
                                                         <span className="d-block text-uppercase x-small opacity-50 fw-medium" style={{ letterSpacing: '0.1em' }}>Role</span>
-                                                        <span className="fw-medium font-monospace" style={{ color: 'var(--foreground)' }}>Full Stack Developer</span>
+                                                        <span className="fw-medium font-monospace" style={{ color: 'var(--foreground)' }}>{activeProject.role?.join(", ")}</span>
                                                     </div>
                                                 </div>
                                                 <div className="d-flex align-items-center gap-3">
@@ -140,7 +141,7 @@ function ProjectsContent() {
                                                     </div>
                                                     <div>
                                                         <span className="d-block text-uppercase x-small opacity-50 fw-medium" style={{ letterSpacing: '0.1em' }}>Type</span>
-                                                        <span className="fw-medium font-monospace" style={{ color: 'var(--foreground)' }}>Web Application</span>
+                                                        <span className="fw-medium font-monospace" style={{ color: 'var(--foreground)' }}>{activeProject.type}</span>
                                                     </div>
                                                 </div>
                                             </div>
