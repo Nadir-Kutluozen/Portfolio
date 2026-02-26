@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useMemo, useEffect, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 import { useTheme } from "@/context/ThemeProvider";
@@ -178,6 +178,7 @@ function BackgroundLayer() {
     const meshRef = useRef<THREE.Mesh>(null);
     const texture = useMemo(() => new THREE.TextureLoader().load("/space-image.jpg"), []);
     const scrollRef = useRef(0);
+    const { viewport } = useThree();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -208,8 +209,12 @@ function BackgroundLayer() {
         meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, targetY, 0.05);
     });
 
+    // The camera is at z=5, the mesh is at z=-50, so distance is 55. 
+    // viewport gives dimensions at z=0 (distance 5). 
+    // So strictly to cover screen we need viewport * 11 (55/5). 
+    // We multiply by 15 to give it extra padding for the parallax rotation/movement!
     return (
-        <mesh ref={meshRef} position={[0, 0, -50]} scale={[120, 120, 1]}>
+        <mesh ref={meshRef} position={[0, 0, -50]} scale={[viewport.width * 15, viewport.height * 15, 1]}>
             <planeGeometry />
             <meshBasicMaterial map={texture} transparent opacity={0.3} />
         </mesh>

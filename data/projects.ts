@@ -55,7 +55,7 @@ export const projects: Project[] = [
         description: "A comprehensive healthcare brokerage platform tailored for medical professionals and clinics.",
         date: "2025-06",
         link: "https://example.com/medbrokerage",
-        homepageimage: "/oceanview(medbrokerage).jpg",
+        homepageimage: "/oceanview.jpg",
         image: "/medbrokerage.png",
         technologies: [
             { name: "Next.js", icon: Layout },

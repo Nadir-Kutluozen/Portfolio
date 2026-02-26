@@ -4,6 +4,7 @@
     --text-secondary: #353535;
     --accent: #00aa39;
     --nav-bg: #F5F5F7;
+    --blob-color: #5cff92;
 }
 
 [data-theme='dark'] {
@@ -12,6 +13,7 @@
     --text-secondary: #a0a0a0;
     --nav-bg: #1A1A1B;
     --accent: #c64aff;
+    --blob-color: #d16fff;
 
     /* Solid Lighter Dark */
     transition: background-color 0.9s ease, color 0.9s ease;

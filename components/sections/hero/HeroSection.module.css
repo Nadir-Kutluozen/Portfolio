@@ -106,10 +106,14 @@
 
 /* Custom button class for better control */
 .ctaButton {
-    padding: 1rem 3rem;
-    /* Desktop padding (px-5 py-3 approx) */
-    font-size: 1.25rem;
-    /* Desktop fs-5 */
+    padding: 1.5rem 2.8rem;
+    font-size: 1.5rem;
+    border-radius: 0 !important;
+}
+
+.textContentWrapper {
+    min-height: 340px;
+    height: 100%;
 }
 
 @media (max-width: 768px) {
@@ -119,13 +123,16 @@
         /* Smaller image on mobile */
     }
 
-    .ctaButton {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.95rem;
-        /* Compact buttons for mobile side-by-side */
+    .textContentWrapper {
+        min-height: auto;
     }
 
-    /* Ensure flex row on mobile for buttons */
+    .ctaButton {
+        padding: 0.8rem 1.6rem;
+        font-size: 1.05rem;
+    }
+
+    /* Ensure flex row on mobile for buttons if we strictly want them side-by-side */
     .ctaContainer {
         flex-direction: row;
         gap: 0.75rem;

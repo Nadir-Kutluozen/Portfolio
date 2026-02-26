@@ -8,6 +8,10 @@ import { FolderSearch } from "@/components/animation/microanimation/FolderSearch
 import TextType from "@/components/animation/microanimation/TextType";
 import DynamicButton from "@/components/ui/DynamicButton";
 import { useTheme } from "@/context/ThemeProvider";
+import { GithubIcon } from "@/components/animation/microanimation/GithubIcon";
+import { InstagramIcon } from "@/components/animation/microanimation/InstagramIcon";
+import { MailboxIcon } from "@/components/animation/microanimation/MailboxIcon";
+import { LinkedinIcon } from "@/components/animation/microanimation/LinkedinIcon";
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -64,10 +68,10 @@ export default function HeroSection() {
                         {/* Column 1: Social Icons */}
                         <div className="col-12 col-md-auto d-flex flex-row flex-md-column justify-content-center align-items-center align-items-md-end gap-3 order-3 order-md-1 mt-4 mt-md-0">
                             {[
-                                { icon: Linkedin, href: "https://www.linkedin.com/in/nadir-kutluozen/" },
-                                { icon: Github, href: "https://github.com/nadir-kutluozen" },
-                                { icon: Instagram, href: "https://instagram.com/nadirkutluozen" },
-                                { icon: Mail, href: "mailto:nadirkutluozen.nk@gmail.com" }
+                                { icon: <MailboxIcon size={34} fill={theme === "dark" ? "#ffffff" : "#000000"} />, href: "mailto:nadirkutluozen.nk@gmail.com" },
+                                { icon: <GithubIcon size={34} stroke={theme === "dark" ? "#ffffff" : "#000000"} />, href: "https://github.com/nadir-kutluozen" },
+                                { icon: <InstagramIcon size={34} fill={theme === "dark" ? "#ffffff" : "#000000"} />, href: "https://instagram.com/nadirkutluozen" },
+                                { icon: <LinkedinIcon size={34} fill={theme === "dark" ? "#ffffff" : "#000000"} />, href: "https://linkedin.com/in/nadir-kutluozen" }
                             ].map((social, index) => (
                                 <motion.a
                                     key={index}
@@ -80,7 +84,7 @@ export default function HeroSection() {
                                     whileTap={{ scale: 0.9 }}
                                     variants={itemVariants}
                                 >
-                                    <social.icon size={36} />
+                                    {social.icon}
                                 </motion.a>
                             ))}
                         </div>
@@ -89,7 +93,7 @@ export default function HeroSection() {
                         <div className="col-12 col-md-5 d-flex justify-content-center justify-content-md-end order-1 order-md-2 mb-4 mb-md-0 pe-md-4">
                             <motion.div
                                 variants={itemVariants}
-                                className={`rounded-3 overflow-hidden shadow-lg border border-2 border-white border-opacity-25  ${styles.imageContainer}`}
+                                className={` overflow-hidden shadow-lg border border-2 border-white border-opacity-25  ${styles.imageContainer}`}
                                 style={{ position: 'relative' }}
                             >
                                 <AnimatePresence>
@@ -108,24 +112,26 @@ export default function HeroSection() {
                         </div>
 
                         {/* Column 3: Bio & Buttons (Right aligned text block) */}
-                        <div className="col-12 col-md-6 text-center text-md-start order-2 order-md-3 ps-md-4">
-                            <motion.h2 className={`${styles.subtitle} text-md-start`} variants={itemVariants}>
-                                Full Stack Software<br />and Design Engineer
-                            </motion.h2>
+                        <div className={`col-12 col-md-6 text-center text-md-start order-2 order-md-3 ps-md-4 d-flex flex-column ${styles.textContentWrapper}`}>
+                            <div>
+                                <motion.h2 className={`${styles.subtitle} text-md-start`} variants={itemVariants}>
+                                    Full Stack Software<br />and Design Engineer
+                                </motion.h2>
 
-                            <motion.p className={`${styles.bio} mx-auto mx-md-0 text-md-start mt-4`} style={{ maxWidth: '480px' }} variants={itemVariants}>
-                                I build digital products that look good and work even better. Merging technical depth with creative design.
-                            </motion.p>
+                                <motion.p className={`${styles.bio} mx-auto mx-md-0 text-md-start mt-4`} style={{ maxWidth: '480px' }} variants={itemVariants}>
+                                    I build digital products that look good and work even better. Merging technical depth with creative design.
+                                </motion.p>
+                            </div>
 
                             <motion.div
-                                className="d-flex gap-3 mt-5 justify-content-center justify-content-md-start align-items-center flex-wrap flex-md-nowrap"
+                                className="d-flex gap-3 mt-auto justify-content-center justify-content-md-start align-items-center pt-4 pt-md-0"
                                 variants={itemVariants}
                             >
                                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                     <DynamicButton
                                         href="/projects"
-                                        className={`btn btn-outline-dark border-opacity-75 d-flex align-items-center shadow-sm ${styles.ctaButton}`}
-                                        style={{ backdropFilter: 'blur(5px)', textDecoration: 'none' }}
+                                        className={`btn btn-outline-dark border-opacity-75 d-flex align-items-center justify-content-center shadow-sm ${styles.ctaButton}`}
+                                        style={{ backdropFilter: 'blur(10px)', textDecoration: 'none' }}
                                     >
                                         Projects <FolderSearch size={22} className="ms-2" />
                                     </DynamicButton>
@@ -133,7 +139,7 @@ export default function HeroSection() {
                                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                     <DynamicButton
                                         href="mailto:nadirkutluozen.nk@gmail.com"
-                                        className={`btn btn-dark fw-bold d-flex align-items-center text-white shadow-sm ${styles.ctaButton}`}
+                                        className={`btn btn-dark fw-bold d-flex align-items-center justify-content-center text-white shadow-sm ${styles.ctaButton}`}
                                         style={{ textDecoration: 'none' }}
                                     >
                                         Contact <ConnectMe size={22} className="ms-2" />
