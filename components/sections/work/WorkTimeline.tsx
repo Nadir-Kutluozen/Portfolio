@@ -13,6 +13,8 @@ export default function WorkTimeline() {
     const [dragWidth, setDragWidth] = useState(0);
     const x = useMotionValue(0);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+    const [isDragging, setIsDragging] = useState(false);
 
     // Custom Cursor State
     const [isHovering, setIsHovering] = useState(false);
@@ -41,17 +43,29 @@ export default function WorkTimeline() {
         setIsScrolled(latest < -10);
     });
 
+    const innerCarouselRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         const updateWidth = () => {
-            if (carouselRef.current) {
-                setDragWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
+            if (carouselRef.current && innerCarouselRef.current) {
+                setDragWidth(innerCarouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
             }
         };
 
-        // Slight delay to ensure images/layout are ready
-        setTimeout(updateWidth, 100);
+        updateWidth();
         window.addEventListener("resize", updateWidth);
-        return () => window.removeEventListener("resize", updateWidth);
+
+        // Robust tracking of the inner max-content width using ResizeObserver
+        let observer: ResizeObserver | null = null;
+        if (innerCarouselRef.current) {
+            observer = new ResizeObserver(() => updateWidth());
+            observer.observe(innerCarouselRef.current);
+        }
+
+        return () => {
+            window.removeEventListener("resize", updateWidth);
+            if (observer) observer.disconnect();
+        };
     }, []);
 
     useEffect(() => {
@@ -82,6 +96,15 @@ export default function WorkTimeline() {
         el.addEventListener("wheel", onWheel, { passive: false });
         return () => el.removeEventListener("wheel", onWheel);
     }, [dragWidth, x]);
+
+    // Track mobile to reduce pixel complexity
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     // Sort projects by date descending
     const sortedProjects = [...projects].sort((a, b) =>
@@ -188,13 +211,20 @@ export default function WorkTimeline() {
                         className="h-100 w-100 overflow-hidden"
                         style={{
                             cursor: "none",
+                            touchAction: "pan-y"
                         }}
                         whileTap={{ cursor: "none" }}
                         onMouseEnter={() => setIsHovering(true)}
                         onMouseLeave={() => setIsHovering(false)}
                     >
                         <motion.div
+                            ref={innerCarouselRef}
                             drag="x"
+                            dragDirectionLock={true}
+                            onDragStart={() => setIsDragging(true)}
+                            onDragEnd={() => {
+                                setTimeout(() => setIsDragging(false), 150);
+                            }}
                             className="h-100 d-flex align-items-stretch"
                             style={{
                                 x,
@@ -206,78 +236,77 @@ export default function WorkTimeline() {
                         >
                             {/* The projects array is mapped to create the massive flush cards */}
                             {sortedProjects.map((project, index) => (
-                                <motion.div
-                                    key={project.id}
-                                    className="d-flex flex-column position-relative overflow-hidden group timeline-card"
-                                    style={{
-                                        height: '100%',
-                                        backgroundColor: 'var(--nav-bg)',
-                                        borderRight: index === sortedProjects.length - 1 ? 'none' : '1px solid rgba(125, 125, 125, 0.2)',
-                                        borderTop: '1px solid rgba(125, 125, 125, 0.2)',
-                                        borderBottom: 'none',
-                                        borderRadius: '0px',
-                                        flexShrink: 0
+                                <Link
+                                    href={`/projects?id=${project.id}`}
+                                    onClick={(e) => {
+                                        if (isDragging) {
+                                            e.preventDefault();
+                                        }
                                     }}
+                                    key={project.id}
+                                    className="text-decoration-none"
+                                    style={{ flexShrink: 0, display: 'block', height: '100%', cursor: 'none' }}
+                                    draggable={false}
                                 >
-                                    {/* Massive Image Background Covering the Card with Pixel Transition */}
-                                    <PixelTransition
-                                        gridSize={10}
-                                        pixelColor="var(--foreground)"
-                                        animationStepDuration={0.15}
-                                        aspectRatio="0"
-                                        className="position-absolute w-100 h-100 top-0 start-0 z-0"
-                                        firstContent={
-                                            <div className="w-100 h-100 position-relative">
-                                                {(project.image) && (
-                                                    <Image
-                                                        src={project.homepageimage || project.image}
-                                                        alt={project.title}
-                                                        fill
-                                                        className="object-fit-cover "
-                                                        sizes="(max-width: 768px) 92vw, 850px"
-                                                        draggable={false}
-                                                        style={{ filter: 'grayscale(10%)' }}
-                                                    />
-                                                )}
-                                                {/* Overlay gradient so text is readable */}
-                                                <div className="position-absolute w-100 h-100 top-0 start-0" style={{
-                                                    background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 40%)',
-                                                    opacity: 1
-                                                }} />
-                                            </div>
-                                        }
-                                        secondContent={
-                                            <div className="w-100 h-100 d-flex align-items-center justify-content-center" style={{ backgroundColor: 'var(--foreground)' }}>
-                                                <h3 className="display-6 fw-light text-uppercase m-0 text-center px-4" style={{ color: 'var(--background)', letterSpacing: '0.1em' }}>
-                                                    {project.title}
-                                                </h3>
-                                            </div>
-                                        }
-                                    />
+                                    <motion.div
+                                        className="d-flex flex-column position-relative overflow-hidden group timeline-card"
+                                        style={{
+                                            height: '100%',
+                                            backgroundColor: 'var(--nav-bg)',
+                                            borderRight: index === sortedProjects.length - 1 ? 'none' : '1px solid rgba(125, 125, 125, 0.2)',
+                                            borderTop: '1px solid rgba(125, 125, 125, 0.2)',
+                                            borderBottom: 'none',
+                                            borderRadius: '0px',
+                                        }}
+                                    >
+                                        {/* Massive Image Background Covering the Card with Pixel Transition */}
+                                        <PixelTransition
+                                            gridSize={isMobile ? 0 : 10}
+                                            pixelColor="var(--foreground)"
+                                            animationStepDuration={0.15}
+                                            aspectRatio="0"
+                                            className="position-absolute w-100 h-100 top-0 start-0 z-0"
+                                            firstContent={
+                                                <div className="w-100 h-100 position-relative">
 
-                                    {/* Content Area overlaying the bottom of the card */}
-                                    <div className="mt-auto position-relative z-1 d-flex flex-column text-white h-100 justify-content-end p-0" style={{ pointerEvents: 'none' }}>
+                                                    {project.animatedIcon ? (
+                                                        <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+                                                            <project.animatedIcon />
+                                                        </div>
+                                                    ) : project.image && !imageErrors[project.id] ? (
+                                                        <Image
+                                                            src={project.homepageimage || project.image}
+                                                            alt={project.title}
+                                                            fill
+                                                            className="object-fit-cover"
+                                                            sizes="(max-width: 768px) 92vw, 850px"
+                                                            draggable={false}
+                                                            style={{ filter: 'grayscale(10%)' }}
+                                                            onError={() => setImageErrors(prev => ({ ...prev, [project.id]: true }))}
+                                                        />
+                                                    ) : null}
+                                                    {/* Overlay gradient so text is readable */}
+                                                    <div className="position-absolute w-100 h-100 top-0 start-0" style={{
+                                                        background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 40%)',
+                                                        opacity: 1
+                                                    }} />
+                                                </div>
+                                            }
+                                            secondContent={
+                                                <div className="w-100 h-100 d-flex align-items-center justify-content-center" style={{ backgroundColor: 'var(--foreground)' }}>
+                                                    <h3 className="display-6 fw-light text-uppercase m-0 text-center px-4" style={{ color: 'var(--background)', letterSpacing: '0.1em' }}>
+                                                        {project.title}
+                                                    </h3>
+                                                </div>
+                                            }
+                                        />
 
-
-                                        <div className="d-flex w-100" style={{ pointerEvents: 'auto' }}>
-                                            <Link href={`/projects?id=${project.id}`} className="btn text-uppercase tracking-wider fw-medium d-inline-flex align-items-center justify-content-center m-0" style={{
-                                                backgroundColor: 'var(--foreground)',
-                                                color: 'var(--background)',
-                                                borderRadius: '0px',
-                                                border: 'none',
-                                                fontSize: '1.1rem',
-                                                padding: '1.5rem 3rem',
-                                                cursor: 'pointer'
-                                            }}
-                                                onMouseEnter={() => setIsHovering(false)}
-                                                onMouseLeave={() => setIsHovering(true)}
-                                                draggable={false}
-                                            >
-                                                Learn More <ArrowUpRight size={22} className="ms-2" />
-                                            </Link>
+                                        {/* Content Area overlaying the bottom of the card */}
+                                        <div className="mt-auto position-relative z-1 d-flex flex-column text-white h-100 justify-content-end p-0" style={{ pointerEvents: 'none' }}>
+                                            {/* Button removed since the whole card is now clickable */}
                                         </div>
-                                    </div>
-                                </motion.div>
+                                    </motion.div>
+                                </Link>
                             ))}
                         </motion.div>
                     </motion.div>

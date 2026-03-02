@@ -65,7 +65,13 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
         if (!pixelGridEl || !activeEl) return;
 
         const pixels = pixelGridEl.querySelectorAll<HTMLDivElement>('.pixelated-image-card__pixel');
-        if (!pixels.length) return;
+
+        // If there are no pixels (gridSize 0), skip animation and just swap instantaneously
+        if (!pixels.length) {
+            activeEl.style.display = activate ? 'block' : 'none';
+            activeEl.style.pointerEvents = activate ? 'none' : '';
+            return;
+        }
 
         gsap.killTweensOf(pixels);
         if (delayedCallRef.current) {
