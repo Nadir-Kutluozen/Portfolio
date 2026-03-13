@@ -22,13 +22,13 @@ export interface Project {
 export const projects: Project[] = [
     {
         id: "1",
-        title: "StewLab",
+        title: "Stew Factory",
         description: "An AI-enabled SVG generation sandbox with a live preview + collaboration-ready editor workflow",
         longDescription: "StewLab is my separate sandbox project where I test a full SVG generation pipeline end-to-end. The idea is simple: you type a prompt, Stew generates an SVG, and you see it update live in real time inside an iframe while keeping the output safe through sanitization before injection. The core focus is building a reliable pipeline, not just a one-shot prompt: structured prompts, strict JSON responses, validation checks, and cleanup so the SVG stays usable for editing. It’s built as a RESTful API workflow where the frontend talks to my endpoints, receives clean SVG output, and can later evolve into a collaboration/editor tool experience. This project is where I experiment with OpenAI integration, SVG safety, multi-step generation logic, and turning AI output into something people can actually use in a real product.",
         date: "2026-02",
-        link: "https://www.banditanimation.com/editor/stew-lab",
-        image: "/stewlab.png",
-        homepageimage: "/stewlab(homepage).png",
+        link: "https://stewfactory.app",
+        image: "/stewfactory.png",
+        homepageimage: "/stewfactory(homepage).png",
         technologies: [
             { name: "Next.js", icon: Code },
             { name: "TypeScript", icon: Code },

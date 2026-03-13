@@ -151,11 +151,11 @@ export default function AboutPage() {
                             <div>
                                 <div className="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-1">
                                     <h3 className="fs-5 fw-bold mb-0">Domino Media</h3>
-                                    <span className="opacity-50 small fw-bold mt-1 mt-sm-0 text-uppercase tracking-widest">2/2024 – 2/2025</span>
+                                    <span className="opacity-50 small fw-bold mt-1 mt-sm-0 text-uppercase tracking-widest">2/2022 – 3/2025</span>
                                 </div>
                                 <p className="opacity-75 mb-2 fw-medium" style={{ color: 'var(--accent)' }}>Web Developer</p>
                                 <ul className="opacity-90 small mb-0 ps-3 lh-lg">
-                                    <li className="mb-1">Developed and launched 7+ custom websites for restaurants and local businesses using PHP-based custom themes.</li>
+                                    <li className="mb-1">Developed and launched custom websites for restaurants and local businesses using PHP-based custom themes.</li>
                                     <li className="mb-1">Implemented SEO optimization strategies and performance improvements to enhance search visibility and site speed.</li>
                                     <li>Designed internal tools and managed deployments to streamline workflows and ensure reliable client delivery.</li>
                                 </ul>
