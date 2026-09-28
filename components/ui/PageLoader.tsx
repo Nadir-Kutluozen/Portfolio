@@ -1,53 +1,58 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { CodeScanStew2 } from "../animation/microanimation/CodeScanStew2";
+import { useRef, useState, useSyncExternalStore } from "react";
+import dynamic from "next/dynamic";
+import { gsap, useGSAP, SplitText, EASE, fontsReady } from "@/lib/gsap";
+import { finishIntro, introPending } from "@/lib/intro";
+import styles from "./PageLoader.module.css";
 
+// Stew only downloads on the visits that actually show the loader
+const NewStew = dynamic(() => import("@/components/animation/microanimation/NewStew"), { ssr: false });
+
+const noSubscribe = () => () => {};
+const serverPending = () => false;
+
+/**
+ * First visit of the session only: Stew pops in, says hello, and the
+ * curtain lifts into the page. Always in the server HTML so it covers the
+ * very first paint; CSS hides it unless <html data-intro="play"> (set by
+ * the boot script in layout.tsx).
+ */
 export default function PageLoader() {
-    const [isLoading, setIsLoading] = useState(true);
+    const root = useRef<HTMLDivElement>(null);
+    const pending = useSyncExternalStore(noSubscribe, introPending, serverPending);
+    const [gone, setGone] = useState(false);
 
-    useEffect(() => {
-        // Hide loader after 2 seconds
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2400);
+    useGSAP((_, contextSafe) => {
+        if (!pending || !root.current || !contextSafe) return;
+        const q = gsap.utils.selector(root);
 
-        return () => clearTimeout(timer);
-    }, []);
+        // Split the greeting once the web fonts are in (they're preloaded)
+        fontsReady().then(contextSafe(() => {
+            const hello = SplitText.create(q(`.${styles.hello}`), { type: "chars", mask: "chars" });
+
+            gsap.timeline({ defaults: { ease: EASE.out } })
+                .set(q(`.${styles.hello}`), { autoAlpha: 1 })
+                .from(q(`.${styles.stew}`), { scale: 0.4, yPercent: 30, autoAlpha: 0, duration: 0.9, ease: "back.out(1.8)" }, 0.15)
+                .from(hello.chars, { yPercent: 110, duration: 0.8, stagger: 0.022 }, 0.35)
+                .to(q(`.${styles.inner}`), { yPercent: -18, autoAlpha: 0, duration: 0.6, ease: "power2.in" }, "+=0.55")
+                .to(root.current, { yPercent: -100, duration: 1, ease: EASE.inOut }, "-=0.25")
+                // the hero starts rising while the curtain is still lifting
+                .add(() => finishIntro(), "-=0.55")
+                .add(() => setGone(true));
+        }));
+    }, { dependencies: [pending], scope: root });
+
+    if (gone) return null;
 
     return (
-        <AnimatePresence>
-            {isLoading && (
-                <motion.div
-                    initial={{ y: 0 }}
-                    exit={{ y: "-100%" }}
-                    transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }} // Smooth snap up
-                    className="fixed-top w-100 vh-100 d-flex flex-column align-items-center justify-content-center"
-                    style={{
-                        backgroundColor: '#ffffff', // User specifically requested white background
-                        color: '#000000',
-                        zIndex: 9999,
-                    }}
-                >
-                    <div className="d-flex flex-column align-items-center justify-content-center flex-grow-1">
-                        <CodeScanStew2 size={120} stroke="#000000" />
-                    </div>
-
-                    {/* Bottom message */}
-                    <div className="pb-5">
-                        <motion.p
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5, duration: 0.5 }}
-                            className="fs-6 fw-medium text-uppercase tracking-widest"
-                            style={{ letterSpacing: '0.1em' }}
-                        >
-                            Hello there traveller!
-                        </motion.p>
-                    </div>
-                </motion.div>
-            )}
-        </AnimatePresence>
+        // Once playing, JS keeps it on screen: finishIntro() clears the html
+        // flag before the curtain is fully up
+        <div ref={root} className={styles.loader} style={pending ? { display: "flex" } : undefined} aria-hidden>
+            <div className={styles.inner}>
+                <div className={styles.stew}>{pending && <NewStew style={{ width: "100%", height: "100%" }} />}</div>
+                <p className={styles.hello} data-anim>Hello there, traveller!</p>
+            </div>
+        </div>
     );
 }

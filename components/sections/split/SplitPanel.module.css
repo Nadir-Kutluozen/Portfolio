@@ -1,0 +1,82 @@
+.split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gutter);
+    padding-inline: var(--gutter);
+}
+
+/* Panels stacked back to back keep the same gutter between them */
+.split + .split {
+    margin-top: var(--gutter);
+}
+
+.photo {
+    --frame-radius: var(--radius-xl);
+    min-height: min(86vh, 820px);
+}
+
+.panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    min-height: min(86vh, 820px);
+    padding: clamp(1.8rem, 4.2vw, 4.5rem);
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    corner-shape: squircle;
+}
+
+.reverse .panel {
+    order: -1;
+}
+
+/* Stew's palette: each color brings its own ink. --panel-bg / --panel-ink
+   also tell what's inside (the tint button) which panel it sits on. */
+.orange {
+    --panel-bg: var(--panel-orange);
+    --panel-ink: var(--panel-orange-ink);
+}
+
+.purple {
+    --panel-bg: var(--panel-purple);
+    --panel-ink: var(--panel-purple-ink);
+}
+
+.cyan {
+    --panel-bg: var(--panel-cyan);
+    --panel-ink: var(--panel-cyan-ink);
+}
+
+.green {
+    --panel-bg: var(--panel-green);
+    --panel-ink: var(--panel-green-ink);
+}
+
+.orange,
+.purple,
+.cyan,
+.green {
+    background-color: var(--panel-bg);
+    color: var(--panel-ink);
+}
+
+@media (max-width: 991.98px) {
+    .split {
+        grid-template-columns: 1fr;
+    }
+
+    .photo {
+        min-height: 60vh;
+    }
+
+    /* photo first on phones, whichever side it sits on at desktop */
+    .reverse .panel {
+        order: 0;
+    }
+
+    .panel {
+        min-height: 0;
+    }
+}

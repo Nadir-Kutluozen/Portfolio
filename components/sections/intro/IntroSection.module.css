@@ -1,0 +1,107 @@
+.intro {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+/* The sentence on the left, cartoon me on the right */
+.opening {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(240px, 26vw, 380px);
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+.toy {
+    width: 100%;
+}
+
+@media (max-width: 991.98px) {
+    .opening {
+        grid-template-columns: 1fr;
+    }
+
+    .toy {
+        width: min(100%, 360px);
+        justify-self: center;
+    }
+}
+
+/* The Fox Kids logo's lower right corner is empty: pull the comma in */
+.foxKids {
+    margin-right: -0.14em;
+}
+
+/* Medium, not heavy: the sentence should read, not shout */
+.statement {
+    max-width: 22ch;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.75rem, 3.5vw, 3.25rem);
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+}
+
+/* The highlights strip */
+.facts {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin: clamp(1rem, 3vw, 2.5rem) 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+}
+
+.fact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.5rem 1.2rem 0 0;
+}
+
+.fact + .fact {
+    padding-left: 1.2rem;
+    border-left: 1px solid var(--line);
+}
+
+/* Numbers and names keep their own casing (NeurIPS, not NEURIPS) */
+.number {
+    font-size: clamp(2.1rem, 3.5vw, 3.5rem);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: none;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.label {
+    max-width: 18ch;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+@media (max-width: 991.98px) {
+    .facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fact,
+    .fact + .fact {
+        padding: 1.4rem 1rem 1.4rem 0;
+        border-left: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .fact:nth-child(even) {
+        padding-left: 1rem;
+        border-left: 1px solid var(--line);
+    }
+
+    /* the fifth one gets the whole last row */
+    .fact:last-child {
+        grid-column: 1 / -1;
+        border-bottom: 0;
+    }
+}

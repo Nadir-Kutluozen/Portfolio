@@ -1,0 +1,21 @@
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1500;
+    display: grid;
+    place-items: center;
+    width: 88px;
+    height: 88px;
+    border-radius: 32px;
+    corner-shape: squircle;
+    --glass-tint: rgba(255, 255, 255, 0.04);
+    --glass-rim: rgba(255, 255, 255, 0.9);
+    --glass-edge: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+    visibility: hidden;
+}

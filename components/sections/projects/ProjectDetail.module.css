@@ -1,0 +1,193 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding-top: calc(var(--nav-h) + clamp(2.5rem, 7vh, 5rem));
+    padding-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+.back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.18s ease-out, gap 0.18s ease-out;
+}
+
+.back:hover {
+    color: var(--foreground);
+    gap: 0.6rem;
+}
+
+.title {
+    max-width: 16ch;
+}
+
+.lead {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    max-width: 42rem;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+}
+
+.facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 3rem;
+    margin: 1.4rem 0 0;
+    padding: 1.4rem 0 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+    width: 100%;
+}
+
+.facts li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.factLabel {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.factValue {
+    font-weight: 600;
+}
+
+/* The screenshot, nearly full-bleed */
+.media {
+    padding-inline: var(--gutter);
+}
+
+.shot {
+    --frame-radius: var(--radius-xl);
+    aspect-ratio: 16 / 9;
+    max-height: 88vh;
+    width: 100%;
+}
+
+.body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+}
+
+.story {
+    margin-top: 1.4rem;
+    font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+    line-height: 1.65;
+    color: var(--foreground);
+}
+
+.stackCard {
+    position: sticky;
+    top: calc(var(--nav-h) + 1.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    padding: clamp(1.4rem, 2.5vw, 2rem);
+    border-radius: var(--radius-lg);
+    corner-shape: squircle;
+    background-color: color-mix(in srgb, var(--foreground) 4%, transparent);
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.chips li {
+    padding: 0.45rem 0.85rem;
+    border-radius: 12px;
+    corner-shape: squircle;
+    background-color: var(--raised);
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Next project: one big link card */
+.next {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: var(--gutter);
+    margin-inline: var(--gutter);
+    padding: var(--gutter);
+    border-radius: var(--radius-xl);
+    corner-shape: squircle;
+    background-color: color-mix(in srgb, var(--foreground) 5%, transparent);
+    color: var(--foreground);
+    text-decoration: none;
+    transition: background-color 0.25s ease-out;
+}
+
+.next:hover {
+    background-color: color-mix(in srgb, var(--foreground) 9%, transparent);
+}
+
+.nextCopy {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 3rem;
+    padding: clamp(1.2rem, 3vw, 2.5rem);
+}
+
+.nextTitle {
+    display: block;
+    font-size: clamp(2.2rem, 5.4vw, 5rem);
+    line-height: 0.92;
+}
+
+.nextImage {
+    position: relative;
+    min-height: clamp(220px, 32vw, 420px);
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    corner-shape: squircle;
+}
+
+.nextImage img {
+    transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.next:hover .nextImage img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 767.98px) {
+    .body,
+    .next {
+        grid-template-columns: 1fr;
+    }
+
+    .stackCard {
+        position: static;
+    }
+
+    .shot {
+        aspect-ratio: 4 / 3;
+    }
+}

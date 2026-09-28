@@ -1,0 +1,7 @@
+/* Sits on the text's baseline, dipping a little below it like the letters do */
+.logo {
+    position: relative;
+    display: inline-block;
+    margin-inline: 0.05em;
+    vertical-align: -0.12em;
+}

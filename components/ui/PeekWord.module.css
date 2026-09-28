@@ -1,0 +1,44 @@
+/* Back to front: the logo, a block the color of the page, the word */
+.word {
+    position: relative;
+    display: inline-block;
+    isolation: isolate;
+}
+
+/* Shows the logo only above the word's bottom edge: below it, it's gone */
+.clip {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 8em;
+    height: 5em;
+    margin-left: -4em;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Sits at the bottom of the clip; GSAP lifts it onto the word */
+.peek {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+}
+
+/* What the logo hides behind: the letters, from their top down (not the
+   empty line space above them). As wide as the word, or the logo if that's
+   wider, so it never covers the punctuation next to it for nothing. */
+.cover {
+    position: absolute;
+    top: var(--letters-top, 0.17em);
+    bottom: 0;
+    left: 50%;
+    z-index: 1;
+    width: max(100%, var(--logo-width) + 0.1em);
+    translate: -50% 0;
+    background-color: var(--background);
+}
+
+.text {
+    position: relative;
+    z-index: 2;
+}

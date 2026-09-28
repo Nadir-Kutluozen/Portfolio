@@ -1,15 +1,19 @@
 import HeroSection from "@/components/sections/hero/HeroSection";
-import AboutSection from "@/components/sections/about/AboutSection";
-import WorkTimeline from "@/components/sections/work/WorkTimeline";
-import CallToAction from "@/components/sections/cta/CallToAction";
+import IntroSection from "@/components/sections/intro/IntroSection";
+import ResearchSection from "@/components/sections/research/ResearchSection";
+import StewSection from "@/components/sections/stew/StewSection";
+import SelectedWork from "@/components/sections/work/SelectedWork";
+import ArtSection from "@/components/sections/art/ArtSection";
 
 export default function Home() {
-  return (
-    <div style={{ paddingBottom: "2rem" }}>
-      <HeroSection />
-      <AboutSection />
-      <WorkTimeline />
-      <CallToAction title="If You like my work, let's talk!" description="I'm here to work and create something amazing!" buttonLink="/contact" buttonTitle="Let's Connect" />
-    </div>
-  );
+    return (
+        <>
+            <HeroSection />
+            <IntroSection />
+            <ResearchSection />
+            <StewSection />
+            <SelectedWork />
+            <ArtSection />
+        </>
+    );
 }

@@ -1,0 +1,120 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    color: var(--foreground);
+    text-decoration: none;
+}
+
+.media {
+    position: relative;
+    margin-bottom: 0.6rem;
+}
+
+/* The words sit a hair inside the picture's edge, in line with its curve */
+.meta,
+.desc,
+.tags {
+    padding-inline: 0.35rem;
+}
+
+.picture {
+    --frame-radius: var(--radius-lg);
+    aspect-ratio: var(--aspect);
+}
+
+/* The picture leans in a touch on hover */
+.picture img {
+    transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.stewArt {
+    aspect-ratio: var(--aspect);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16%;
+    border-radius: var(--radius-lg);
+    corner-shape: squircle;
+    background-color: var(--panel-green);
+}
+
+.badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+    corner-shape: squircle;
+    --glass-tint: rgba(255, 255, 255, 0.06);
+    --glass-rim: rgba(255, 255, 255, 0.9);
+    --glass-edge: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.2));
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+    transition: opacity 0.25s ease-out, transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (hover: hover) {
+    .card:hover .picture img {
+        transform: scale(1.045);
+    }
+
+    .card:hover .badge {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+
+.year {
+    flex: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.desc {
+    max-width: 52ch;
+    color: var(--text-secondary);
+    font-size: 0.98rem;
+    line-height: 1.55;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.15rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.tags li {
+    padding: 0.28rem 0.7rem;
+    border-radius: 10px;
+    corner-shape: squircle;
+    background-color: color-mix(in srgb, var(--foreground) 6%, transparent);
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 500;
+}

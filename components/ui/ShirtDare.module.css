@@ -1,0 +1,84 @@
+/* Both layers cover the card's box. Under sits beneath the card, so only
+   what's outside it shows, in the page's ink; over is clipped to the card,
+   in dark ink on the sky (light in both themes). */
+.under,
+.over {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: var(--arrow-shown, 0);
+    transition: opacity 0.4s ease-out;
+}
+
+.under {
+    z-index: -1;
+    color: var(--foreground);
+}
+
+.over {
+    z-index: 1;
+    color: #10202a;
+    clip-path: inset(0 round var(--radius-xl));
+}
+
+/* The drawing at its own size; --arrow (useArrowBetween) lays it from the
+   note to the shirt */
+.arrow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 674.73px;
+    height: 438.64px;
+    transform-origin: 0 0;
+    transform: var(--arrow);
+}
+
+.arrow path[stroke="#000000"] {
+    stroke: currentColor;
+}
+
+.arrow path[fill="#000000"] {
+    fill: currentColor;
+}
+
+/* Two columns: outside the card on its left, a little above the corner of
+   the shirt the arrow dives in to (152, 315 in the Nadir viewBox) */
+.note {
+    --tail-x: 0.72;
+    --tail-y: 10px;
+    --aim-x: 152.419;
+    --aim-y: 315.242;
+    --aim-gap: 6px;
+    --mirror: 0;
+    position: absolute;
+    top: calc(57% - 2em - 2rem);
+    right: calc(100% + clamp(0.5rem, 1.2vw, 1.1rem));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 5.2em;
+    min-height: 2em;
+    margin: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(0.9rem, 1.05vw, 1.1rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-align: right;
+    white-space: pre;
+    transform: rotate(-4deg);
+    transform-origin: 100% 100%;
+}
+
+/* One column: above the card on the right, diving down to the other corner
+   (352, 315), the loop swung out toward the card's edge */
+@media (max-width: 991.98px) {
+    .note {
+        --tail-x: 0.3;
+        --aim-x: 351.705;
+        --mirror: 1;
+        top: auto;
+        right: 0.75rem;
+        bottom: calc(100% + 0.4rem);
+    }
+}

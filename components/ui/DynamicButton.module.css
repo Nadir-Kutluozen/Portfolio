@@ -1,48 +1,131 @@
-.dynamicButton {
+.button {
+    --fill-origin: left;
     position: relative;
-    overflow: hidden;
-    z-index: 1;
-    transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s ease;
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 0.55rem;
+    overflow: hidden;
+    border: 0;
+    border-radius: var(--radius-md);
+    corner-shape: squircle;
+    background-color: var(--btn-bg);
+    color: var(--btn-fg);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    -webkit-tap-highlight-color: transparent;
 }
 
-.dynamicButton::after {
-    content: '';
+/* The directional fill */
+.button::after {
+    content: "";
     position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--foreground);
+    inset: 0;
     z-index: -1;
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.dynamicButton.left::after {
-    transform-origin: left;
-}
-
-.dynamicButton.right::after {
-    transform-origin: right;
-}
-
-/* Hover state */
-.dynamicButton:not(.hovering)::after {
+    background-color: var(--btn-fill);
     transform: scaleX(0);
+    transform-origin: var(--fill-origin);
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.dynamicButton.hovering::after {
-    transform: scaleX(1);
+.label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
 }
 
-.dynamicButton.hovering {
-    color: var(--background) !important;
+/* Icons in a button nudge toward where they point */
+.label svg {
+    flex: none;
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* ensure internal icons adapt to color change */
-.dynamicButton.hovering svg,
-.dynamicButton.hovering span {
-    color: var(--background) !important;
-    fill: var(--background);
+@media (hover: hover) {
+    .button:hover {
+        color: var(--btn-fill-fg);
+    }
+
+    .button:hover::after {
+        transform: scaleX(1);
+    }
+
+    .button:hover .label svg:last-child {
+        transform: translate(2px, -2px);
+    }
+}
+
+.button:active {
+    transform: scale(0.98);
+}
+
+/* Sizes */
+.md {
+    height: 48px;
+    padding: 0 1.35rem;
+    font-size: 0.95rem;
+}
+
+.lg {
+    height: 58px;
+    padding: 0 1.9rem;
+    font-size: 1.02rem;
+}
+
+/* Variants */
+.solid {
+    --btn-bg: var(--foreground);
+    --btn-fg: var(--background);
+    --btn-fill: var(--accent);
+    --btn-fill-fg: #fff;
+}
+
+.soft {
+    --btn-bg: color-mix(in srgb, var(--foreground) 7%, transparent);
+    --btn-fg: var(--foreground);
+    --btn-fill: var(--foreground);
+    --btn-fill-fg: var(--background);
+}
+
+/* On an ink card that flips with the theme */
+.inverse {
+    --btn-bg: var(--background);
+    --btn-fg: var(--foreground);
+    --btn-fill: var(--accent);
+    --btn-fill-fg: #fff;
+}
+
+/* On a colored panel: a tint of the panel's ink, filling with that ink on
+   hover, the panel's own color on top. Named colors, not currentColor: the
+   button's color changes on hover, and the fill followed it (white on white). */
+.tint {
+    --btn-bg: color-mix(in srgb, var(--panel-ink, var(--foreground)) 14%, transparent);
+    --btn-fg: var(--panel-ink, var(--foreground));
+    --btn-fill: var(--panel-ink, var(--foreground));
+    --btn-fill-fg: var(--panel-bg, var(--background));
+}
+
+/* On a colored panel */
+.light {
+    --btn-bg: #fff;
+    --btn-fg: #121212;
+    --btn-fill: #121212;
+    --btn-fill-fg: #fff;
+}
+
+/* On a photo or video: liquid glass (the rim, depth and refraction come
+   from .liquid-glass and useLiquidGlass) */
+.glass {
+    --btn-bg: rgba(255, 255, 255, 0.05);
+    --btn-fg: #fff;
+    --btn-fill: #fff;
+    --btn-fill-fg: #121212;
+    --glass-rim: rgba(255, 255, 255, 0.85);
+    --glass-edge: rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
 }

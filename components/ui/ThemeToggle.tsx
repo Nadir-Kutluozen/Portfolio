@@ -1,27 +1,34 @@
 "use client";
 
-import React from "react";
+import { useRef, type MouseEvent } from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/context/ThemeProvider";
-import { motion } from "framer-motion";
+import { gsap } from "@/lib/gsap";
+import styles from "./ThemeToggle.module.css";
 
-export default function ThemeToggle() {
+/** Sun/moon switch. The new theme grows out of the button as a circle. */
+export default function ThemeToggle({ className = "" }: { className?: string }) {
     const { theme, toggleTheme } = useTheme();
+    const icon = useRef<HTMLSpanElement>(null);
+
+    const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        toggleTheme({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+        // a one-off spin on click; nothing to clean up
+        gsap.fromTo(icon.current, { rotation: -90, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.6, ease: "back.out(2)" });
+    };
 
     return (
-        <motion.button
-            onClick={toggleTheme}
-            className="btn btn-link p-2 text-decoration-none d-flex align-items-center justify-content-center"
-            style={{ color: "var(--foreground)" }}
-            whileHover={{ scale: 1.1, rotate: 15 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Toggle Theme"
+        <button
+            type="button"
+            onClick={onClick}
+            className={`${styles.toggle} ${className}`}
+            aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+            title={theme === "dark" ? "Light theme" : "Dark theme"}
         >
-            {theme === "light" ? (
-                <Moon size={22} className="text-secondary" />
-            ) : (
-                <Sun size={22} className="text-warning" />
-            )}
-        </motion.button>
+            <span ref={icon} className={styles.icon}>
+                {theme === "dark" ? <Sun size={19} strokeWidth={2} /> : <Moon size={19} strokeWidth={2} />}
+            </span>
+        </button>
     );
 }

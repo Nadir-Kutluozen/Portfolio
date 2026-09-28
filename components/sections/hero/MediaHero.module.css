@@ -1,0 +1,261 @@
+/* Fills the first screen under the navbar. svh (with a vh fallback) so a
+   phone's browser bar never covers anything. */
+.hero {
+    position: relative;
+    height: 100vh;
+    height: 100svh;
+    min-height: 560px;
+    padding: var(--nav-h) var(--gutter) var(--gutter);
+    /* distance of the corner words from the frame's edges */
+    --inset: clamp(1.2rem, 2.4vw, 2.4rem);
+}
+
+.frame {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    corner-shape: squircle;
+    background-color: #2a1510;
+    color: #fff;
+    isolation: isolate;
+}
+
+/* Bigger than the frame on every side, so it can drift on scroll and lean
+   toward the pointer without ever showing an edge */
+.drift {
+    position: absolute;
+    inset: -6% -2%;
+    will-change: transform;
+}
+
+.lean {
+    position: absolute;
+    inset: 0;
+    will-change: transform;
+}
+
+.media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--pos);
+    display: block;
+}
+
+/* Darkens only the corners that carry words; the middle stays the artwork */
+.scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(110% 85% at 0% 100%, rgba(22, 9, 4, 0.66) 0%, rgba(22, 9, 4, 0) 58%),
+        radial-gradient(80% 75% at 100% 100%, rgba(22, 9, 4, 0.58) 0%, rgba(22, 9, 4, 0) 55%),
+        linear-gradient(to bottom, rgba(22, 9, 4, 0.34) 0%, rgba(22, 9, 4, 0) 18%);
+}
+
+/* ── Top corners: label left, time + video control right ── */
+.top {
+    position: absolute;
+    top: var(--inset);
+    left: var(--inset);
+    right: var(--inset);
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.aside {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.time {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* A small drop of liquid glass */
+.control {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 14px;
+    corner-shape: squircle;
+    --glass-tint: rgba(255, 255, 255, 0.05);
+    --glass-rim: rgba(255, 255, 255, 0.85);
+    --glass-edge: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.18s ease-out;
+}
+
+.control:hover {
+    transform: scale(1.06);
+}
+
+/* ── Bottom corners: name left, intro + buttons right ── */
+.bottom {
+    position: absolute;
+    left: calc(var(--gutter) + var(--inset));
+    right: calc(var(--gutter) + var(--inset));
+    bottom: calc(var(--gutter) + var(--inset));
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    color: #fff;
+}
+
+.title {
+    margin: 0;
+    font-size: clamp(2.3rem, 4.8vw, 5rem);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    color: inherit;
+}
+
+.line {
+    display: block;
+    overflow: clip;
+    /* room for the letters' tops while they rise through the mask */
+    padding-top: 0.06em;
+    margin-top: -0.06em;
+}
+
+.word {
+    display: block;
+}
+
+.caption {
+    margin-top: 0.9rem;
+    font-size: 0.85rem;
+    font-style: italic;
+    opacity: 0.78;
+}
+
+.cornerRight {
+    max-width: 23rem;
+}
+
+/* "stack": everything in the bottom-left corner, the right side stays art */
+.stack {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.4rem;
+}
+
+.stack .cornerRight {
+    max-width: 30rem;
+}
+
+.cornerInner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.intro {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+/* ── Phones: the frame shows the artwork, the words sit under it ── */
+@media (max-width: 767.98px) {
+    .hero {
+        height: auto;
+        min-height: 0;
+        padding-top: calc(var(--nav-h) - 4px);
+        --inset: 1.1rem;
+    }
+
+    .frame {
+        height: 60vh;
+        height: 60svh;
+        min-height: 360px;
+    }
+
+    .media {
+        object-position: var(--pos-mobile);
+    }
+
+    .scrim {
+        background: linear-gradient(to bottom, rgba(22, 9, 4, 0.4) 0%, rgba(22, 9, 4, 0) 26%);
+    }
+
+    .bottom {
+        position: static;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.3rem;
+        padding: 1.6rem calc(var(--pad) - var(--gutter)) 0.4rem;
+        color: var(--foreground);
+    }
+
+    .title {
+        font-size: clamp(2.5rem, 12.5vw, 3.6rem);
+    }
+
+    .caption {
+        color: var(--text-secondary);
+    }
+
+    .cornerRight {
+        max-width: none;
+    }
+
+    .intro {
+        color: var(--text-secondary);
+    }
+
+    .actions > * {
+        flex: 1 1 0;
+        padding-inline: 1rem !important;
+    }
+
+    /* On paper instead of the artwork: ink button first, soft one after */
+    .actions > :first-child {
+        --btn-bg: var(--foreground);
+        --btn-fg: var(--background);
+        --btn-fill: var(--accent);
+        --btn-fill-fg: #fff;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
+    .actions > :not(:first-child) {
+        --btn-bg: color-mix(in srgb, var(--foreground) 7%, transparent);
+        --btn-fg: var(--foreground);
+        --btn-fill: var(--foreground);
+        --btn-fill-fg: var(--background);
+    }
+}
+
+/* Phones: the label and the play button share the top line; the time
+   is in the menu and footer anyway */
+@media (max-width: 767.98px) {
+    .time {
+        display: none;
+    }
+
+    .top :global(.t-eyebrow) {
+        letter-spacing: 0.22em;
+        white-space: nowrap;
+    }
+}

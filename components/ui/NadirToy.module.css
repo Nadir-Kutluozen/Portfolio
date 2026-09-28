@@ -1,0 +1,139 @@
+/* The card plus the note that points into it from outside (ShirtDare).
+   Isolated, so the note's under layer stays above the page. */
+.frame {
+    position: relative;
+    isolation: isolate;
+}
+
+.frame[data-size="tall"] {
+    height: 100%;
+}
+
+/* One column: room above the card for the note, and the card sizes to me
+   (100% of a stretched stage plus that room would spill onto what's next) */
+@media (max-width: 991.98px) {
+    .frame,
+    .frame[data-size="tall"] {
+        height: auto;
+        margin-top: 2.6rem;
+    }
+}
+
+/* I stand on a lit stage, like the spotlight in my painting. The sky
+   stays light in both themes so my black shirt never disappears. */
+.toy {
+    position: relative;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    corner-shape: squircle;
+    background:
+        radial-gradient(60% 45% at 50% 18%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 70%),
+        radial-gradient(90% 70% at 50% 100%, #b8d9e8, rgba(184, 217, 232, 0) 70%),
+        #d9eef6;
+}
+
+/* The art runs past its square frame (the hair on top), so it gets a
+   little headroom */
+.art {
+    width: 100%;
+    aspect-ratio: 1;
+    padding-top: 10%;
+    cursor: grab;
+    touch-action: pan-y;
+}
+
+.art:active {
+    cursor: grabbing;
+}
+
+/* Contact: fills its column */
+.tall {
+    height: 100%;
+    min-height: min(78vh, 720px);
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.5rem, 5vw, 4.5rem) clamp(4.5rem, 8vw, 6rem);
+}
+
+.tall .art {
+    width: min(100%, 460px);
+}
+
+/* Home: a card sized to me */
+.card {
+    padding: 0.5rem 1.5rem 3.8rem;
+}
+
+@media (max-width: 991.98px) {
+    .tall {
+        min-height: 0;
+    }
+}
+
+/* The note only shows up while you're playing */
+.note {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(1rem, 2.5vw, 1.6rem);
+    transform: translate(-50%, 10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-out, transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    white-space: nowrap;
+}
+
+@media (hover: hover) {
+    .toy:hover .note {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        pointer-events: auto;
+    }
+}
+
+.toy:focus-within .note,
+.touched .note {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.6rem 0.55rem 1rem;
+    border-radius: 16px;
+    corner-shape: squircle;
+    color: var(--foreground);
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+/* The chip sits on a light sky, whatever the theme */
+.toy .chip {
+    --glass-tint: rgba(255, 255, 255, 0.35);
+    --glass-rim: rgba(255, 255, 255, 0.95);
+    --glass-edge: rgba(20, 60, 80, 0.18);
+    color: #10202a;
+}
+
+.link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 11px;
+    corner-shape: squircle;
+    background-color: #121212;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.18s ease-out;
+}
+
+.link:hover {
+    background-color: var(--accent);
+}

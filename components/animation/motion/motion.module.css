@@ -1,0 +1,74 @@
+/* ── ParallaxImage ───────────────────────────────────────── */
+/* Round it from outside with --frame-radius */
+.frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--frame-radius, var(--radius-lg));
+    corner-shape: squircle;
+    background-color: var(--sunken);
+    isolation: isolate;
+}
+
+.frameInner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    will-change: transform;
+}
+
+.frameImage {
+    position: absolute;
+    inset: 0;
+}
+
+/* ── PinnedStack ─────────────────────────────────────────── */
+/* svh, not vh: on iOS 100vh is the large viewport, so bottom-anchored copy
+   would sit behind the browser bar */
+.stack {
+    position: relative;
+    height: 100vh;
+    height: 100svh;
+}
+
+.stackPanel {
+    position: absolute;
+    inset: var(--gutter);
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    corner-shape: squircle;
+    transform-origin: 50% 20%;
+    will-change: transform;
+    background-color: var(--surface);
+}
+
+.stackShade {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    background-color: #000;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Reduced motion: no pin, the cards just follow each other */
+.stackStatic {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gutter);
+    padding: var(--gutter);
+}
+
+.stackStatic .stackPanel {
+    position: relative;
+    inset: auto;
+    min-height: 88vh;
+    min-height: 88svh;
+}
+
+@media (max-width: 767.98px) {
+    .stackPanel {
+        inset: 0;
+        border-radius: 0;
+    }
+}

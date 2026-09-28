@@ -1,78 +1,54 @@
-// "use client";
+"use client";
 
-// import styles from "./ArtSection.module.css";
-// import { motion } from "framer-motion";
-// import { Instagram, ArrowRight } from "lucide-react";
+import { useRef, type CSSProperties } from "react";
+import Image from "next/image";
+import { gsap, useGSAP } from "@/lib/gsap";
+import { profile } from "@/data/profile";
+import SplitReveal from "@/components/animation/motion/SplitReveal";
+import Reveal from "@/components/animation/motion/Reveal";
+import { ARTWORK } from "@/data/artwork";
+import styles from "./ArtSection.module.css";
 
-// // Mock Data for "Pinterest" Grid
-// // In a real app, these would come from a CMS or explicit file list
-// const artItems = [
-//     { id: 1, src: "/superman.JPG", type: "img" },
-//     { id: 2, src: "/spiderman1.PNG", type: "img" },
-//     { id: 3, src: "/spacewomans.PNG", type: "img" },
-//     { id: 4, src: "/wiredraccoon.PNG", type: "img" },
-//     { id: 5, src: "/spaceman.PNG", type: "img" },
-//     { id: 6, src: "/raccoonschilling.PNG", type: "img" },
-//     { id: 7, src: "/eren.PNG", type: "img" },
-//     { id: 8, src: "/womaninspace.PNG", type: "img" },
-// ];
+/** The sketchbook: a strip of drawings that drifts sideways as you scroll past. */
+export default function ArtSection() {
+    const root = useRef<HTMLElement>(null);
+    const track = useRef<HTMLDivElement>(null);
 
-// export default function ArtSection() {
-//     return (
-//         <section className={styles.artSection}>
+    useGSAP(() => {
+        // Desktop only; on phones the strip is a normal swipeable row
+        gsap.matchMedia().add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+            gsap.fromTo(track.current, { x: () => window.innerWidth * 0.08 }, {
+                x: () => -(track.current!.scrollWidth - window.innerWidth * 0.92),
+                ease: "none",
+                scrollTrigger: { trigger: root.current, start: "top bottom", end: "bottom top", scrub: 0.8, invalidateOnRefresh: true },
+            });
+        });
+    }, { scope: root });
 
-//             <motion.h2
-//                 className={styles.heading}
-//                 initial={{ opacity: 0, y: 30 }}
-//                 whileInView={{ opacity: 1, y: 0 }}
-//                 viewport={{ once: true }}
-//             >
-//                 ART CORNER
-//             </motion.h2>
+    return (
+        <section ref={root} className={`section ${styles.art}`} aria-labelledby="art-title">
+            <div className={`shell ${styles.head}`}>
+                <span className="t-eyebrow">Sketchbook</span>
+                <SplitReveal as="h2" id="art-title" className="t-display t-l">
+                    I still draw <span className="t-serif">every day</span>
+                </SplitReveal>
+                <Reveal as="p" className={`t-lead ${styles.lead}`}>
+                    {profile.drawingYears} years in, I draw on paper and on the iPad, and I sign everything {profile.signature}
+                </Reveal>
+            </div>
 
-//             <div className={styles.gridContainer}>
-//                 <div className={styles.masonryGrid}>
-//                     {artItems.map((item, index) => (
-//                         <motion.div
-//                             key={item.id}
-//                             className={styles.artItem}
-//                             initial={{ opacity: 0, y: 20 }}
-//                             whileInView={{ opacity: 1, y: 0 }}
-//                             viewport={{ once: true }}
-//                             transition={{ delay: index * 0.05 }}
-//                         >
-//                             {/* Placeholder for actual image */}
-//                             {item.src && (
-//                                 <img
-//                                     src={item.src}
-//                                     alt="Digital Art"
-//                                     className={styles.artImage}
-//                                     style={{ width: '100%', height: 'auto', display: 'block' }}
-//                                 />
-//                             )}
-
-//                             <div className={styles.overlay}>
-//                                 <Instagram size={32} className={styles.artIcon} />
-//                             </div>
-//                         </motion.div>
-//                     ))}
-//                 </div>
-
-//                 {/* Fade Overlay with Button */}
-//                 <div className={styles.fadeOverlay}>
-//                     <div className={styles.footer}>
-//                         <motion.button
-//                             className="btn btn-outline-light rounded-4 px-4 py-2 fs-6 d-inline-flex align-items-center gap-2"
-//                             whileHover={{ scale: 1.05 }}
-//                             whileTap={{ scale: 0.95 }}
-//                             style={{ backdropFilter: 'blur(5px)', background: 'rgba(0,0,0,0.5)' }}
-//                         >
-//                             See More <ArrowRight size={20} />
-//                         </motion.button>
-//                     </div>
-//                 </div>
-//             </div>
-
-//         </section>
-//     );
-// }
+            <div className={styles.viewport}>
+                <div ref={track} className={styles.track}>
+                    {ARTWORK.map((piece) => (
+                        <figure key={piece.src} className={styles.piece} style={{ "--ratio": piece.width / piece.height } as CSSProperties}>
+                            <div className={styles.frame}>
+                                <Image src={piece.src} alt={piece.alt} fill sizes="(max-width: 767px) 80vw, 45vw" style={{ objectFit: "cover" }} />
+                            </div>
+                            <figcaption className={styles.caption}>{piece.title}</figcaption>
+                        </figure>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}

@@ -1,0 +1,76 @@
+.stack {
+    margin-top: var(--section);
+}
+
+/* ── Art cards: the picture covers the card, copy sits on a scrim ── */
+.art {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: clamp(1.6rem, 5vw, 4.5rem);
+    color: #fff;
+}
+
+.media {
+    position: absolute;
+    inset: 0;
+}
+
+.scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.18) 55%, rgba(0, 0, 0, 0.06));
+}
+
+.artCopy {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.headline {
+    max-width: 14ch;
+    font-size: clamp(2.6rem, 8vw, 7.2rem);
+    line-height: 0.92;
+}
+
+.sub {
+    max-width: 30rem;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    opacity: 0.88;
+}
+
+@media (max-width: 767.98px) {
+    /* Phones: the art gets its own squircle up top and the copy stands
+       on solid ground below it, so the landscape art is not cropped away */
+    .art {
+        justify-content: flex-start;
+        gap: 1.4rem;
+        padding: calc(var(--nav-h) + 0.6rem) 1.1rem calc(2.4rem + env(safe-area-inset-bottom, 0px));
+        background-color: var(--background);
+        color: var(--foreground);
+    }
+
+    .media {
+        position: relative;
+        inset: auto;
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        corner-shape: squircle;
+    }
+
+    .scrim {
+        display: none;
+    }
+
+    .sub {
+        opacity: 0.75;
+    }
+}

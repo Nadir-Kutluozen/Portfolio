@@ -1,0 +1,22 @@
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    corner-shape: squircle;
+    background-color: color-mix(in srgb, var(--foreground) 6%, transparent);
+    color: var(--foreground);
+    cursor: pointer;
+    transition: background-color 0.18s ease-out;
+}
+
+.toggle:hover {
+    background-color: color-mix(in srgb, var(--foreground) 11%, transparent);
+}
+
+.icon {
+    display: inline-flex;
+}

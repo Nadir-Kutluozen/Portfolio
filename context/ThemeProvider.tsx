@@ -1,53 +1,69 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useContext, useSyncExternalStore } from "react";
 
 type Theme = "light" | "dark";
 
 interface ThemeContextType {
     theme: Theme;
-    toggleTheme: () => void;
+    /** Flip the theme. Pass the click position to grow the new theme out of it. */
+    toggleTheme: (origin?: { x: number; y: number }) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-    const [theme, setTheme] = useState<Theme>("light");
-    const [mounted, setMounted] = useState(false);
+// Minimal typing for the View Transitions API (not in every TS lib yet)
+type ViewTransitionDoc = Document & {
+    startViewTransition?: (update: () => void) => { ready: Promise<void> };
+};
 
-    useEffect(() => {
-        setMounted(true);
-        // Check for saved theme or system preference
-        const savedTheme = localStorage.getItem("theme") as Theme;
-        if (savedTheme) {
-            setTheme(savedTheme);
-            document.documentElement.setAttribute("data-theme", savedTheme);
-        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            // Default to light as per user request, but respect explicit system dark if desired
-            // Current instruction mentions default light. 
-            // setMounted logic ensures we don't flash.
-            setTheme("light");
-            document.documentElement.setAttribute("data-theme", "light");
+// The data-theme attribute on <html> is the single source of truth. The boot
+// script in layout.tsx sets it before the first paint; React just listens.
+function subscribe(onChange: () => void) {
+    const observer = new MutationObserver(onChange);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+}
+
+const readTheme = (): Theme => (document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light");
+const serverTheme = (): Theme => "light";
+
+function applyTheme(theme: Theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    try {
+        localStorage.setItem("theme", theme);
+    } catch {
+        // storage blocked: the theme still applies for this visit
+    }
+}
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+    const theme = useSyncExternalStore(subscribe, readTheme, serverTheme);
+
+    const toggleTheme = useCallback((origin?: { x: number; y: number }) => {
+        const next: Theme = readTheme() === "dark" ? "light" : "dark";
+        const doc = document as ViewTransitionDoc;
+        const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (!doc.startViewTransition || calm) {
+            applyTheme(next);
+            return;
         }
+
+        // The new theme grows as a circle out of the toggle
+        const x = origin?.x ?? window.innerWidth - 40;
+        const y = origin?.y ?? 32;
+        const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+        const transition = doc.startViewTransition(() => applyTheme(next));
+        transition.ready.then(() => {
+            document.documentElement.animate(
+                { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+                { duration: 650, easing: "cubic-bezier(0.7, 0, 0.2, 1)", pseudoElement: "::view-transition-new(root)" },
+            );
+        });
     }, []);
 
-    const toggleTheme = () => {
-        const newTheme = theme === "light" ? "dark" : "light";
-        setTheme(newTheme);
-        localStorage.setItem("theme", newTheme);
-        document.documentElement.setAttribute("data-theme", newTheme);
-    };
-
-    // Prevent hydration mismatch by rendering children only after mount, 
-    // OR render provider always but accept potential mismatch for now. 
-    // For this fix, we simply render Provider always to fix the crash.
-    // Ideally we usage suppressHydrationWarning in layout if themes differ.
-
-    return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
-            {children}
-        </ThemeContext.Provider>
-    );
+    return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme() {

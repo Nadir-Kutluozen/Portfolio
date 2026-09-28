@@ -1,0 +1,18 @@
+.mascot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 0.9rem;
+}
+
+.stew {
+    width: clamp(120px, 12vw, 180px);
+    aspect-ratio: 476.57 / 407.91;
+}
+
+.caption {
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.75;
+}

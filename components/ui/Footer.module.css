@@ -1,82 +1,111 @@
+/* Pages end with their own section padding, so this only adds a breath */
 .footer {
-    width: 100%;
-    padding: 3rem 0;
-    margin-top: auto;
-    background-color: var(--nav-bg);
-    /* Use theme background for a nice, cohesive look */
-    border-top: 1px solid rgba(128, 128, 128, 0.2);
-    /* No border radius, keep it sharp */
+    padding: clamp(1rem, 4vh, 3rem) 0 0;
+}
+
+/* The closing card: ink on paper (it flips with the theme) */
+.cta {
+    margin-inline: var(--gutter);
+    padding: clamp(2.2rem, 6vw, 6rem) clamp(1.5rem, 5vw, 5.5rem) clamp(2.2rem, 5vw, 5rem);
+    border-radius: var(--radius-xl);
+    corner-shape: squircle;
+    background-color: var(--foreground);
+    color: var(--background);
+    transform-origin: 50% 100%;
+}
+
+.ctaTitle {
+    margin: 1.4rem 0 clamp(2.4rem, 6vw, 4.5rem);
+    font-size: clamp(2.7rem, 8.2vw, 8rem);
+    line-height: 0.9;
+    max-width: 13ch;
+}
+
+.ctaRow {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
+    padding-top: 1.8rem;
+    border-top: 1px solid color-mix(in srgb, var(--background) 18%, transparent);
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+/* The quiet part underneath */
+.bottom {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.4fr;
+    gap: 2rem;
+    padding-block: clamp(3rem, 7vw, 5rem) 2.5rem;
 }
 
-.content {
+.col {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
+    align-items: flex-start;
+    gap: 0.55rem;
 }
 
-.linksWrapper {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
+.end {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.signature {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: -0.03em;
+    color: var(--foreground);
+    text-decoration: none;
 }
 
 .link {
     color: var(--foreground);
-    text-decoration: none;
-    font-size: 0.85rem;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: 0.7;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    position: relative;
-    padding-bottom: 2px;
-}
-
-.link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: var(--foreground);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease;
+    text-decoration: none;
+    opacity: 0.75;
+    transition: opacity 0.18s ease-out;
 }
 
 .link:hover {
     opacity: 1;
 }
 
-.link:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
+.muted {
+    color: var(--text-muted);
+    font-size: 0.85rem;
 }
 
-.separator {
-    width: 40px;
-    height: 1px;
-    background-color: var(--foreground);
-    opacity: 0.2;
-}
-
-.text {
-    font-size: 0.75rem;
+.top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 40px;
+    padding: 0 0.95rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    corner-shape: squircle;
+    background-color: color-mix(in srgb, var(--foreground) 6%, transparent);
     color: var(--foreground);
-    opacity: 0.5;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.18s ease-out;
+}
+
+.top:hover {
+    background-color: color-mix(in srgb, var(--foreground) 11%, transparent);
+}
+
+@media (max-width: 767.98px) {
+    .bottom {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .end {
+        grid-column: 1 / -1;
+        align-items: flex-start;
+        text-align: left;
+    }
 }

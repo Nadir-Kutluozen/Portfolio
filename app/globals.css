@@ -1,104 +1,326 @@
+/* ─────────────────────────────────────────────────────────────
+   Tokens. Raw colors only live here; everything else points at them.
+   ───────────────────────────────────────────────────────────── */
 :root {
-    --background: #ffffff;
-    --foreground: #1A1A1B;
-    --text-secondary: #353535;
-    --accent: #00aa39;
-    --nav-bg: #F5F5F7;
-    --blob-color: #5cff92;
-    --blob-color-2: #cfffdf;
+    color-scheme: light;
+
+    --background: #f4f3ef;      /* warm paper */
+    --surface: #ffffff;          /* cards resting on the page */
+    --raised: #ffffff;           /* the selected item in a soft group */
+    --sunken: #e9e7e1;           /* soft fills: chips, quiet buttons */
+    --foreground: #131313;       /* ink */
+    --text-secondary: #57544f;
+    --text-muted: #8a867e;
+    --line: rgba(19, 19, 19, 0.1);
+    --accent: #00aa39;           /* fills, dots, focus */
+    --accent-text: #047a31;      /* the accent at a readable text weight */
+
+    /* Liquid glass: barely tinted, crisp rim, a darker lower edge for thickness */
+    --glass-tint: rgba(255, 255, 255, 0.06);
+    --glass-rim: rgba(255, 255, 255, 0.95);
+    --glass-edge: rgba(24, 14, 6, 0.16);
+    --glass-shadow: rgba(40, 24, 12, 0.22);
+
+    /* Stew's panel colors: the same in both themes, each with its own ink */
+    --panel-orange: #ff8f00;
+    --panel-orange-ink: #221302;
+    --panel-purple: #8b5cf6;
+    --panel-purple-ink: #ffffff;
+    --panel-cyan: #00d4ff;
+    --panel-cyan-ink: #062730;
+    --panel-green: #00e670;
+    --panel-green-ink: #032412;
+
+    /* Shape. These are the plain rounded fallbacks; browsers that can draw
+       a squircle get bigger values below. */
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --radius-xl: 26px;
+
+    /* Rhythm */
+    --gutter: clamp(8px, 1.1vw, 16px);     /* inset of full-bleed panels */
+    --pad: clamp(1.25rem, 4vw, 3.5rem);    /* side padding of text blocks */
+    --section: clamp(4rem, 10vh, 7rem);    /* space between sections */
+    --nav-h: 64px;
+    --shell: 1440px;
+
+    /* Type (next/font variables are set on <html> in layout.tsx) */
+    --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-display: var(--font-inter-tight), var(--font-sans);
+    --font-serif: var(--font-instrument), Georgia, "Times New Roman", serif;
+
+    /* Point Bootstrap's own variables at ours */
+    --bs-body-font-family: var(--font-sans);
+    --bs-body-bg: var(--background);
+    --bs-body-color: var(--foreground);
+    --bs-border-color: var(--line);
+    --bs-emphasis-color: var(--foreground);
 }
 
-[data-theme='dark'] {
-    --background: #1A1A1B;
-    --foreground: #ffffff;
-    --text-secondary: #a0a0a0;
-    --nav-bg: #1A1A1B;
+/* A squircle hugs its corner tighter than a circle of the same radius, so it
+   needs a bigger radius for the same softness. That extra length is where
+   the "volume" comes from. */
+@supports (corner-shape: squircle) {
+    :root {
+        --radius-sm: 16px;
+        --radius-md: 26px;
+        --radius-lg: 36px;
+        --radius-xl: 46px;
+    }
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+
+    --background: #0e0e0e;
+    --surface: #181818;
+    --raised: #2c2c2c;
+    --sunken: #202020;
+    --foreground: #f2efe9;
+    --text-secondary: #aba69d;
+    --text-muted: #76726b;
+    --line: rgba(255, 255, 255, 0.1);
     --accent: #c64aff;
-    --blob-color: #d16fff;
-    --blob-color-2: #e8b6ff;
+    --accent-text: #d995ff;
 
-    /* Solid Lighter Dark */
-    transition: background-color 0.9s ease, color 0.9s ease;
+    --glass-tint: rgba(28, 28, 28, 0.14);
+    --glass-rim: rgba(255, 255, 255, 0.5);
+    --glass-edge: rgba(0, 0, 0, 0.45);
+    --glass-shadow: rgba(0, 0, 0, 0.55);
 }
 
+/* ─────────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────────── */
 body {
     background-color: var(--background);
     color: var(--foreground);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
-/* Hide Scrollbar Utility */
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
+::selection {
+    background-color: var(--accent);
+    color: #fff;
 }
 
-.no-scrollbar {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
+a {
+    color: inherit;
 }
 
-.bento-box {
-    position: relative;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+    margin: 0;
+}
+
+/* Elements the intro animates stay hidden until GSAP hands them over, so a
+   slow hydration never flashes them in their final spot first. */
+.js [data-anim] {
+    visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js [data-anim] {
+        visibility: visible;
+    }
+}
+
+/* No scrolling under the first-visit loader (PageLoader.tsx) */
+html[data-intro="play"] body {
     overflow: hidden;
 }
 
-.bento-box:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+/* Theme switch: the new theme grows out of the toggle (ThemeToggle.tsx) */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
 }
 
-.bg-cover {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+/* ─────────────────────────────────────────────────────────────
+   Layout helpers
+   ───────────────────────────────────────────────────────────── */
+.squircle {
+    border-radius: var(--radius-lg);
+    corner-shape: squircle;
 }
 
-.text-shadow {
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+.shell {
+    width: 100%;
+    max-width: var(--shell);
+    margin-inline: auto;
+    padding-inline: var(--pad);
 }
 
-
-
-
-
-.custom-border {
-    border: 1px solid rgba(255, 255, 255, 0.1);
+.section {
+    padding-block: var(--section);
 }
 
-/* --- Theme Overrides for Bootstrap Buttons --- */
-
-.btn-dark {
-    background-color: var(--foreground) !important;
-    color: var(--background) !important;
-    border-color: var(--foreground) !important;
+.skip-link {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 3000;
+    padding: 0.7rem 1.1rem;
+    border-radius: var(--radius-sm);
+    corner-shape: squircle;
+    background: var(--foreground);
+    color: var(--background);
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-160%);
 }
 
-.btn-dark:hover {
-    opacity: 0.9;
+.skip-link:focus-visible {
+    transform: none;
 }
 
-.btn-outline-dark {
-    color: var(--foreground) !important;
-    border-color: var(--foreground) !important;
-    background-color: transparent !important;
+/* ─────────────────────────────────────────────────────────────
+   Liquid glass (Apple style). This is the layer every browser gets: a
+   thin tint, frost, a bright rim where light hits the edge, light pooling
+   along the bottom for depth, and a soft lift off the page. In Chromium,
+   useLiquidGlass() adds real refraction and color dispersion on top.
+   ───────────────────────────────────────────────────────────── */
+.liquid-glass {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--glass-tint);
+    -webkit-backdrop-filter: blur(5px) saturate(1.5);
+    backdrop-filter: blur(5px) saturate(1.5);
+    box-shadow:
+        /* crisp specular edge where light hits the top */
+        inset 0 1px 0.5px 0 var(--glass-rim),
+        /* the rim catching light down the sides and along the bottom */
+        inset 1px 0 1px -0.5px color-mix(in srgb, var(--glass-rim) 45%, transparent),
+        inset -1px 0 1px -0.5px color-mix(in srgb, var(--glass-rim) 30%, transparent),
+        inset 0 -1px 1px 0 color-mix(in srgb, var(--glass-rim) 40%, transparent),
+        /* thickness: light inside the top, shade inside the bottom */
+        inset 0 10px 14px -10px color-mix(in srgb, var(--glass-rim) 45%, transparent),
+        inset 0 -12px 16px -12px var(--glass-edge),
+        /* lifted off the page */
+        0 1px 2px color-mix(in srgb, var(--glass-shadow) 60%, transparent),
+        0 14px 32px -12px var(--glass-shadow);
 }
 
-.btn-outline-dark:hover,
-.btn-outline-dark:active {
-    background-color: var(--foreground) !important;
-    color: var(--background) !important;
+/* The sheen: a thin band of light along the upper curve */
+.liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    corner-shape: inherit;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 45%);
+    pointer-events: none;
 }
 
-/* Ensure Icons use the theme's foreground color if standard text classes fail */
-[data-theme='dark'] .text-body,
-[data-theme='dark'] .btn-dark,
-[data-theme='dark'] .btn-outline-dark {
-    --bs-body-color: var(--foreground);
+/* ─────────────────────────────────────────────────────────────
+   Type scale. Heavy uppercase display type for big moments, a quiet
+   sans for reading, and an italic serif for the odd accent word.
+   ───────────────────────────────────────────────────────────── */
+.t-display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.035em;
+    line-height: 0.9;
+}
+
+.t-xl {
+    font-size: clamp(3.3rem, 11.6vw, 11.5rem);
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+}
+
+.t-l {
+    font-size: clamp(2.6rem, 7.2vw, 6.6rem);
+}
+
+.t-m {
+    font-size: clamp(2.1rem, 4.8vw, 4.4rem);
+    line-height: 0.95;
+}
+
+.t-quote {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    font-size: clamp(1.75rem, 3vw, 2.9rem);
+}
+
+.t-eyebrow {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    opacity: 0.62;
+}
+
+.t-lead {
+    font-size: clamp(1.1rem, 1.45vw, 1.3rem);
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.t-body {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+/* The accent word: italic serif, lowercase, a touch bigger so it sits level
+   with heavy capitals */
+.t-serif {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: -0.01em;
+}
+
+.t-display .t-serif,
+.t-quote .t-serif {
+    font-size: 1.12em;
+    line-height: 0.8;
+    letter-spacing: -0.02em;
+}
+
+/* SplitText line masks (SplitReveal): a little room above and below so
+   heavy capitals and serif tails never get clipped */
+.split-line-mask {
+    padding-block: 0.1em 0.16em;
+    margin-block: -0.1em -0.16em;
+}
+
+/* On mouse and trackpad the page's own scrollbar gives way to the glass one
+   (GlassScrollbar; the boot script sets the class before the first paint, so
+   nothing shifts). Touch screens keep their native indicator. */
+html.glass-scrollbar {
+    scrollbar-width: none;
+}
+
+html.glass-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* The glass arrow (GlassCursor) is the pointer on mouse and trackpad. Text
+   fields, and anything marked data-native-cursor, keep the system one. */
+html.glass-cursor,
+html.glass-cursor *:not(:is([data-native-cursor], [data-native-cursor] *, input, textarea, select, [contenteditable], [contenteditable] *)) {
+    cursor: none !important;
 }

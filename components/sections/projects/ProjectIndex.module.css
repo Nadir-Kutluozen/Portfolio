@@ -1,0 +1,64 @@
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    height: 44px;
+    padding: 0 1.1rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    corner-shape: squircle;
+    background-color: color-mix(in srgb, var(--foreground) 6%, transparent);
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.18s ease-out, color 0.18s ease-out;
+}
+
+.chip:hover {
+    color: var(--foreground);
+}
+
+.active {
+    background-color: var(--foreground);
+    color: var(--background);
+}
+
+.active:hover {
+    color: var(--background);
+}
+
+.count {
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.6;
+}
+
+/* Edge to edge with the page gutter, tight gaps */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2.75rem, 5.5vw, 5rem) var(--gutter);
+    padding-inline: var(--gutter);
+}
+
+.item {
+    min-width: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 767.98px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
